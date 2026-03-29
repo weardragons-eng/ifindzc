@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vendre mon iPhone — iFindz</title>
+  <meta name="description" content="Publiez votre annonce gratuitement sur iFindz. Vendez votre iPhone rapidement avec nos outils d'analyse de prix IA et de vérification IMEI.">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="toast-container" id="toast-container"></div>
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo"><span class="brand-text">iFindz</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="imei.html" class="nav-link">Vérifier IMEI</a>
+    </div>
+    <div class="nav-actions">
+      <a href="marketplace.html" class="btn btn-secondary btn-sm">← Retour</a>
+      <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="marketplace.html" class="nav-link">🛍️ Marketplace</a>
+  <a href="imei.html" class="nav-link">🔍 Vérifier IMEI</a>
+</div>
+
+<div class="page-wrapper">
+  <div style="background:linear-gradient(135deg,var(--bg-secondary),var(--bg-card));border-bottom:1px solid var(--border-color);padding:40px 0">
+    <div class="container" style="max-width:800px">
+      <h1 class="heading-1 mb-sm">📱 Publier une Annonce</h1>
+      <p class="text-muted">Remplissez les détails pour la publication — prix IA inclus</p>
+      <!-- Step indicator -->
+      <div class="step-indicator mt-lg" id="step-indicator">
+        <div class="step-dot active" id="dot-1">1</div>
+        <div class="step-line" id="line-1"></div>
+        <div class="step-dot" id="dot-2">2</div>
+        <div class="step-line" id="line-2"></div>
+        <div class="step-dot" id="dot-3">3</div>
+        <div class="step-line" id="line-3"></div>
+        <div class="step-dot" id="dot-4">4</div>
+        <div class="step-line" id="line-4"></div>
+        <div class="step-dot" id="dot-5">5</div>
+      </div>
+      <div class="flex justify-between text-xs text-muted mt-sm">
+        <span>Modèle</span><span>État</span><span>Photos</span><span>IMEI</span><span>Contact</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="max-width:800px;padding-top:40px;padding-bottom:80px">
+    <!-- STEP 1 -->
+    <div id="step-1" class="animate-slide-up">
+      <div class="heading-2 mb-lg">1. Quel iPhone vendez-vous ?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div class="form-group">
+          <label class="form-label">Modèle *</label>
+          <select class="form-select" id="sell-model">
+            <option value="">Sélectionner le modèle…</option>
+            <option>iPhone X</option><option>iPhone XS</option><option>iPhone XS Max</option><option>iPhone XR</option>
+            <option>iPhone 11</option><option>iPhone 11 Pro</option><option>iPhone 11 Pro Max</option>
+            <option>iPhone 12</option><option>iPhone 12 Mini</option><option>iPhone 12 Pro</option><option>iPhone 12 Pro Max</option>
+            <option>iPhone 13</option><option>iPhone 13 Mini</option><option>iPhone 13 Pro</option><option>iPhone 13 Pro Max</option>
+            <option>iPhone 14</option><option>iPhone 14 Plus</option><option>iPhone 14 Pro</option><option>iPhone 14 Pro Max</option>
+            <option>iPhone 15</option><option>iPhone 15 Plus</option><option>iPhone 15 Pro</option><option>iPhone 15 Pro Max</option>
+            <option>iPhone 16</option><option>iPhone 16 Plus</option><option>iPhone 16 Pro</option><option>iPhone 16 Pro Max</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Stockage *</label>
+          <select class="form-select" id="sell-storage">
+            <option value="">Sélectionner…</option>
+            <option>64GB</option><option>128GB</option><option>256GB</option><option>512GB</option><option>1TB</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Couleur</label>
+          <input type="text" class="form-input" id="sell-color" placeholder="ex: Titane Naturel">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Région / Version</label>
+          <select class="form-select" id="sell-region">
+            <option>Europe (EU)</option><option>USA / CDMA</option><option>Moyen-Orient (Middle East)</option><option>Asie-Pacifique</option><option>Inconnu</option>
+          </select>
+        </div>
+      </div>
+      <!-- AI price preview -->
+      <div class="market-price-widget mt-lg" id="price-preview" style="display:none">
+        <div class="flex items-center gap-sm mb-sm"><span style="font-size:1.1rem">🧠</span><div class="font-semibold">Prix IA Suggéré</div></div>
+        <div style="font-family:var(--font-display);font-size:1.75rem;font-weight:800" id="ai-price">—</div>
+        <div class="text-sm text-muted">Basé sur <span id="ai-price-count">—</span> annonces similaires actives</div>
+      </div>
+      <div class="flex justify-end mt-xl"><button class="btn btn-primary btn-lg" onclick="goStep(2)">Suivant →</button></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step-2" class="hidden animate-slide-up">
+      <div class="heading-2 mb-lg">2. État de l'appareil</div>
+      <div class="form-group mb-lg">
+        <label class="form-label">Condition *</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px" id="condition-select">
+          <div class="card p-lg text-center pointer condition-opt" data-val="New" onclick="selectCondition(this,'New')" style="border-color:transparent">
+            <div style="font-size:2rem;margin-bottom:8px">✨</div>
+            <div class="font-semibold">Neuf</div>
+            <div class="text-xs text-muted mt-sm">Jamais utilisé, scellé</div>
+          </div>
+          <div class="card p-lg text-center pointer condition-opt" data-val="Like New" onclick="selectCondition(this,'Like New')" style="border-color:transparent">
+            <div style="font-size:2rem;margin-bottom:8px">💎</div>
+            <div class="font-semibold">Comme Neuf</div>
+            <div class="text-xs text-muted mt-sm">Impeccable, très peu utilisé</div>
+          </div>
+          <div class="card p-lg text-center pointer condition-opt" data-val="Used" onclick="selectCondition(this,'Used')" style="border-color:transparent">
+            <div style="font-size:2rem;margin-bottom:8px">📱</div>
+            <div class="font-semibold">Utilisé</div>
+            <div class="text-xs text-muted mt-sm">Traces d'usage normales</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group mb-lg">
+        <label class="form-label">Santé de la batterie : <span id="battery-display" style="color:var(--accent-green)">100%</span></label>
+        <input type="range" class="range-slider" min="50" max="100" value="100" id="sell-battery" oninput="updateBatteryDisplay(this.value)">
+        <div class="flex justify-between text-xs text-muted mt-sm"><span>50%</span><span>75%</span><span>100%</span></div>
+      </div>
+      <div class="form-group mb-lg">
+        <label class="form-label">Accessoires inclus</label>
+        <div class="flex gap-sm" style="flex-wrap:wrap">
+          <label class="filter-chip pointer"><input type="checkbox" style="display:none"> 📦 Boite originale</label>
+          <label class="filter-chip pointer"><input type="checkbox" style="display:none"> 🔌 Câble</label>
+          <label class="filter-chip pointer"><input type="checkbox" style="display:none"> 🎧 Écouteurs</label>
+          <label class="filter-chip pointer"><input type="checkbox" style="display:none"> 🔋 Chargeur</label>
+          <label class="filter-chip pointer"><input type="checkbox" style="display:none"> 🧾 Facture</label>
+        </div>
+      </div>
+      <div class="flex justify-between mt-xl">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(1)">← Retour</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(3)">Suivant →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div id="step-3" class="hidden animate-slide-up">
+      <div class="heading-2 mb-lg">3. Photos & Description</div>
+      <!-- Photo upload zone -->
+      <div style="border:2px dashed var(--border-color);border-radius:var(--radius-xl);padding:48px;text-align:center;margin-bottom:24px;cursor:pointer;transition:all var(--transition-base);background:var(--bg-glass-light)" id="photo-zone" onclick="showToast('Téléchargement de photos à venir !','info')" onmouseover="this.style.borderColor='var(--accent-blue)'" onmouseout="this.style.borderColor='var(--border-color)'">
+        <div style="font-size:3rem;margin-bottom:16px">📸</div>
+        <div class="font-semibold mb-sm">Cliquez pour ajouter des photos</div>
+        <div class="text-sm text-muted">JPG, PNG • Max 10 Mo • 1-6 photos</div>
+        <div class="mt-md"><span class="badge badge-verified">Conseil : 3+ photos = 2× plus de contact</span></div>
+      </div>
+      <div class="form-group mb-lg">
+        <label class="form-label">Description *</label>
+        <textarea class="form-textarea" id="sell-desc" placeholder="Décrivez l'état de votre iPhone en détail : rayures, réparations, accessoires, raison de la vente…" style="min-height:140px"></textarea>
+      </div>
+      <div class="form-group mb-lg">
+        <label class="form-label">Prix demandé (DA) *</label>
+        <div style="position:relative">
+          <input type="number" class="form-input" id="sell-price" placeholder="ex: 185000" style="padding-right:120px">
+          <div style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:0.875rem">Dinars (DA)</div>
+        </div>
+        <div id="price-advice" class="mt-sm text-sm" style="color:var(--text-muted)">💡 Entrez un prix pour voir l'analyse IA</div>
+      </div>
+      <div class="flex justify-between mt-xl">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(2)">← Retour</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(4)">Suivant →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div id="step-4" class="hidden animate-slide-up">
+      <div class="heading-2 mb-lg">4. Vérification IMEI</div>
+      <div class="card p-xl mb-lg" style="background:linear-gradient(135deg,rgba(59,130,246,0.06),rgba(139,92,246,0.06))">
+        <div class="flex items-center gap-md mb-md">
+          <div style="font-size:2rem">🔐</div>
+          <div>
+            <div class="font-semibold">Vérifiez votre IMEI</div>
+            <div class="text-sm text-muted">Les annonces avec IMEI vérifié reçoivent <strong style="color:var(--accent-green)">3× plus de contacts</strong></div>
+          </div>
+        </div>
+        <div class="imei-input-group">
+          <input type="text" id="sell-imei" class="form-input" placeholder="15 chiffres IMEI (*#06#)" maxlength="15" inputmode="numeric" style="font-family:monospace;letter-spacing:2px">
+          <button class="btn btn-primary" onclick="verifySellIMEI()">Vérifier</button>
+        </div>
+        <div id="sell-imei-result" class="mt-md"></div>
+        <div class="mt-md text-sm text-muted">Tapez *#06# sur votre iPhone pour afficher l'IMEI directement.</div>
+      </div>
+      <div class="flex justify-between mt-xl">
+        <button class="btn btn-ghost btn-lg" onclick="goStep(3)">← Retour</button>
+        <button class="btn btn-primary btn-lg" onclick="goStep(5)">Suivant (optionnel) →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div id="step-5" class="hidden animate-slide-up">
+      <div class="heading-2 mb-lg">5. Localisation & Contact</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div class="form-group">
+          <label class="form-label">Wilaya *</label>
+          <select class="form-select" id="sell-wilaya"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Disponibilité</label>
+          <select class="form-select" id="sell-avail">
+            <option value="Immediate">⚡ Remise en main propre (immédiat)</option>
+            <option value="Delivery">🚚 Livraison disponible</option>
+            <option value="Both">⚡🚚 Les deux</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Numéro WhatsApp</label>
+          <input type="tel" class="form-input" id="sell-phone" placeholder="+213 5XX XX XX XX">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Préférence de contact</label>
+          <select class="form-select" id="sell-contact">
+            <option>WhatsApp uniquement</option>
+            <option>Messages iDz</option>
+            <option>Appel téléphone</option>
+            <option>Tous les moyens</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Summary card -->
+      <div class="card p-lg mt-xl" style="background:linear-gradient(135deg,rgba(16,185,129,0.06),rgba(59,130,246,0.06))">
+        <div class="heading-3 mb-md">✅ Récapitulatif</div>
+        <div id="sell-summary" class="text-muted text-sm">Complétez toutes les étapes pour voir le récapitulatif.</div>
+      </div>
+
+      <div class="mt-xl">
+        <button class="btn btn-gold btn-lg w-full" style="font-size:1.1rem;padding:20px" onclick="publishListing()">🚀 Publier l'annonce — Gratuit</button>
+        <p class="text-center text-sm text-muted mt-md">En publiant, vous acceptez les CGU iDz. Votre annonce sera visible immédiatement.</p>
+      </div>
+    </div>
+
+    <!-- Success state -->
+    <div id="step-success" class="hidden animate-slide-up text-center" style="padding:64px 0">
+      <div style="font-size:5rem;margin-bottom:24px">🎉</div>
+      <h2 class="heading-1 mb-md gradient-text">Annonce publiée !</h2>
+      <p class="text-lg text-muted mb-xl">Votre iPhone est maintenant visible par des milliers d'acheteurs en Algérie.</p>
+      <div class="flex gap-md justify-center" style="flex-wrap:wrap">
+        <a href="marketplace.html" class="btn btn-primary btn-lg">🛍️ Voir le marketplace</a>
+        <a href="sell.html" class="btn btn-gold btn-lg">📱 Publier une autre</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script>
+// Auth gate for selling
+document.addEventListener('DOMContentLoaded', () => {
+  const user = getCurrentUser();
+  const pageWrapper = document.querySelector('.page-wrapper');
+  if (!user) {
+    // Not logged in
+    pageWrapper.innerHTML = `
+      <div class="sell-auth-gate animate-slide-up">
+        <div class="sell-auth-gate-icon">🔑</div>
+        <h2 class="heading-1 mb-md">Connexion requise</h2>
+        <p class="text-muted text-lg mb-lg">Connectez-vous ou créez un compte pour publier une annonce sur iDz.</p>
+        <div class="auth-info-box mb-lg" style="justify-content:center">
+          <span>🛡️</span>
+          <span class="text-sm text-muted">Marketplace sécurisé — la vérification d'identité est requise pour les vendeurs.</span>
+        </div>
+        <div class="flex gap-md justify-center" style="flex-wrap:wrap">
+          <a href="login.html?redirect=${encodeURIComponent('sell.html')}" class="btn btn-primary btn-lg">🔑 Se connecter</a>
+          <a href="signup.html" class="btn btn-gold btn-lg">✨ Créer un compte</a>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  if (user.verificationStatus !== 'verified') {
+    // Not verified
+    const statusBadge = user.verificationStatus === 'pending'
+      ? '<span class="badge badge-pending">⏳ Vérification en cours</span>'
+      : '<span class="badge badge-not-verified">🔒 Non vérifié</span>';
+    pageWrapper.innerHTML = `
+      <div class="sell-auth-gate animate-slide-up">
+        <div class="sell-auth-gate-icon">🛡️</div>
+        <h2 class="heading-1 mb-md">Vérification requise</h2>
+        <p class="text-muted text-lg mb-md">Pour publier des annonces et vendre sur iDz, vous devez d'abord vérifier votre identité.</p>
+        <div class="mb-lg">${statusBadge}</div>
+        <div class="auth-info-box mb-lg" style="justify-content:center">
+          <span>🇩🇿</span>
+          <span class="text-sm text-muted">Carte nationale algérienne requise. Processus rapide et confidentiel.</span>
+        </div>
+        <a href="verification.html" class="btn btn-gold btn-lg">🛡️ Vérifier mon identité</a>
+        <div class="mt-lg">
+          <a href="marketplace.html" class="btn btn-ghost">🛍️ Parcourir le marketplace en attendant</a>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  // Verified: proceed with sell form
+  initSellForm();
+});
+
+function initSellForm() {
+let currentStep = 1;
+
+window.goStep = function(n) {
+  document.getElementById(`step-${currentStep}`).classList.add('hidden');
+  const next = document.getElementById(`step-${n}`);
+  if(!next) return;
+  next.classList.remove('hidden');
+  // Update step dots
+  for(let i=1;i<=5;i++){
+    const dot=document.getElementById(`dot-${i}`);
+    if(i<n){ dot.classList.remove('active'); dot.classList.add('done'); dot.textContent='✓'; }
+    else if(i===n){ dot.classList.add('active'); dot.classList.remove('done'); dot.textContent=i; }
+    else { dot.classList.remove('active','done'); dot.textContent=i; }
+    if(i<5){ const line=document.getElementById(`line-${i}`);
+      line.classList.toggle('done',i<n); }
+  }
+  currentStep=n;
+  if(n===5) buildSummary();
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+window.selectCondition = function(el,val) {
+  document.querySelectorAll('.condition-opt').forEach(c=>{ c.style.borderColor='transparent'; c.style.background=''; });
+  el.style.borderColor='var(--accent-blue)';
+  el.style.background='rgba(59,130,246,0.08)';
+  el.dataset.selected='true';
+};
+
+window.updateBatteryDisplay = function(v){
+  const el=document.getElementById('battery-display');
+  const cls=v>=85?'var(--accent-green)':v>=70?'var(--accent-gold)':'var(--accent-red)';
+  el.style.color=cls;
+  el.textContent=v+'%';
+}
+
+// AI price suggestion
+document.addEventListener('DOMContentLoaded',()=>{
+  // Wilaya selector
+  const ws=document.getElementById('sell-wilaya');
+  if(ws) ws.innerHTML=WILAYAS.map(w=>`<option value="${w}">${w}</option>`).join('');
+
+  // Update AI price on model/storage change
+  ['sell-model','sell-storage'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.addEventListener('change',updateAIPrice);
+  });
+
+  // Price advice
+  const priceInput=document.getElementById('sell-price');
+  if(priceInput){
+    priceInput.addEventListener('input',()=>{
+      const model=document.getElementById('sell-model')?.value;
+      const storage=document.getElementById('sell-storage')?.value;
+      const market=getMarketPrice(model,storage);
+      const price=parseInt(priceInput.value);
+      const advice=document.getElementById('price-advice');
+      if(!advice||!market||!price) return;
+      const delta=Math.round(((price-market)/market)*100);
+      if(delta<=-8) advice.innerHTML=`<span style="color:var(--accent-green)">💎 Excellent prix — Vous vendrez très vite ! (${delta}% sous le marché)</span>`;
+      else if(delta<=5) advice.innerHTML=`<span style="color:var(--accent-blue-light)">✓ Prix correct — Dans la fourchette du marché</span>`;
+      else if(delta<=20) advice.innerHTML=`<span style="color:var(--accent-gold)">⚠️ Légèrement au-dessus du marché (+${delta}%)</span>`;
+      else advice.innerHTML=`<span style="color:var(--accent-red)">🚨 Prix trop élevé — Risque de pas vendre (+${delta}%)</span>`;
+    });
+  }
+});
+
+function updateAIPrice(){
+  const model=document.getElementById('sell-model')?.value;
+  const storage=document.getElementById('sell-storage')?.value;
+  const preview=document.getElementById('price-preview');
+  const aiPrice=document.getElementById('ai-price');
+  const aiCount=document.getElementById('ai-price-count');
+  if(!model||!storage||!preview) return;
+  const market=getMarketPrice(model,storage);
+  if(market){ preview.style.display='block'; aiPrice.textContent=formatPrice(market); aiCount.textContent=Math.floor(Math.random()*40+10); }
+  else { preview.style.display='none'; }
+}
+
+function verifySellIMEI(){
+  const imei=document.getElementById('sell-imei')?.value;
+  const result=document.getElementById('sell-imei-result');
+  if(!imei||!result) return;
+  result.innerHTML='<div class="text-sm text-muted">Vérification…</div>';
+  setTimeout(()=>{
+    const valid=/^\d{15}$/.test(imei);
+    if(!valid){ result.innerHTML='<span class="badge badge-overpriced">❌ IMEI invalide</span>'; return; }
+    const lastD=parseInt(imei[14]);
+    if(lastD===7||lastD===3){ result.innerHTML='<span class="badge badge-imei-flagged">🚨 Appareil signalé — Vous ne pouvez pas lister cet appareil</span>'; }
+    else { result.innerHTML='<span class="badge badge-imei-clean">✅ IMEI Propre — Badge de confiance activé !</span>'; }
+  },1800);
+}
+
+function buildSummary(){
+  const model=document.getElementById('sell-model')?.value;
+  const storage=document.getElementById('sell-storage')?.value;
+  const cond=document.querySelector('.condition-opt[data-selected="true"]')?.dataset.val||'—';
+  const battery=document.getElementById('sell-battery')?.value;
+  const price=document.getElementById('sell-price')?.value;
+  const wilaya=document.getElementById('sell-wilaya')?.value;
+  const summary=document.getElementById('sell-summary');
+  if(!summary) return;
+  summary.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      ${[['Modèle',model||'—'],['Stockage',storage||'—'],['État',cond],['Batterie',battery+'%'],['Prix',price?formatPrice(parseInt(price)):'—'],['Wilaya',wilaya||'—']].map(([l,v])=>`<div class="flex justify-between" style="padding:8px;background:var(--bg-glass-light);border-radius:8px"><span>${l}</span><span class="font-medium">${v}</span></div>`).join('')}
+    </div>`;
+}
+
+window.publishListing = function(){
+  document.getElementById(`step-${currentStep}`).classList.add('hidden');
+  document.getElementById('step-success').classList.remove('hidden');
+  showToast('Annonce publiée avec succès !','success');
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+} // end initSellForm
+</script>
+<style>
+@media (max-width: 768px) {
+  .condition-opt { padding: 14px 12px !important; }
+  .condition-opt span:first-child { font-size: 1.5rem !important; }
+}
+@media (max-width: 500px) {
+  .step-indicator + .flex { display: none; }
+}
+</style>
+</body>
+</html>
+

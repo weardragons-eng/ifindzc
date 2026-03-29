@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Annonce iPhone — iFindz</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="toast-container" id="toast-container"></div>
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo"><span class="brand-text">iFindz</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="marketplace.html" class="nav-link active">Marketplace</a>
+      <a href="imei.html" class="nav-link">Vérifier IMEI</a>
+      <a href="profile.html" class="nav-link">Mon Profil</a>
+      <a href="chat.html" class="nav-link">Messages</a>
+    </div>
+    <div class="nav-actions">
+      <a href="sell.html" class="btn btn-gold btn-sm">📱 Vendre</a>
+      <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="marketplace.html" class="nav-link">🛍️ Marketplace</a>
+  <a href="sell.html" class="nav-link">📱 Vendre mon iPhone</a>
+  <a href="imei.html" class="nav-link">🔍 Vérifier IMEI</a>
+</div>
+
+<div class="page-wrapper" style="padding-bottom:64px">
+  <div class="container" style="padding-top:32px" id="listing-content">
+    <div class="text-center" style="padding:64px 0">
+      <div style="font-size:2rem">⏳</div>
+      <div class="mt-md text-muted">Chargement de l'annonce…</div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(location.search);
+  const id = parseInt(params.get('id')) || 1;
+  const listing = LISTINGS.find(l=>l.id===id) || LISTINGS[0];
+  const seller = getSellerById(listing.sellerId);
+  const delta = getPriceDelta(listing);
+  const priceStatus = getPriceStatus(delta);
+  const market = getMarketPrice(listing.model, listing.storage);
+  const battCls = getBatteryClass(listing.battery);
+  const condBadge = getConditionBadge(listing.condition);
+  document.title = `${listing.model} ${listing.storage} — iFindz`;
+
+  let priceStatusHtml = '';
+  if(priceStatus==='great-deal') priceStatusHtml=`<span class="badge badge-good-deal">💎 Bonne Affaire (${delta}% sous le marché)</span>`;
+  else if(priceStatus==='overpriced') priceStatusHtml=`<span class="badge badge-overpriced">⚠️ Au-dessus du marché (+${delta}%)</span>`;
+  else if(priceStatus==='suspicious') priceStatusHtml=`<span class="badge badge-overpriced">🚨 Prix suspicieux (+${delta}%)</span>`;
+  else if(priceStatus==='fair') priceStatusHtml=`<span class="badge badge-verified">✓ Prix correct</span>`;
+
+  const meterPct = market ? Math.min(100, Math.round((listing.price / market) * 60)) : 50;
+  const meterCls = priceStatus==='great-deal'?'good':priceStatus==='fair'?'fair':'high';
+
+  const similar = LISTINGS.filter(l=>l.id!==id&&l.model===listing.model).slice(0,4);
+
+  document.getElementById('listing-content').innerHTML = `
+    <!-- Breadcrumb -->
+    <div class="flex items-center gap-sm text-sm text-muted mb-lg" style="flex-wrap:wrap">
+      <a href="index.html" style="color:var(--text-muted)">Accueil</a> <span>›</span>
+      <a href="marketplace.html" style="color:var(--text-muted)">Marketplace</a> <span>›</span>
+      <span style="color:var(--text-primary)">${listing.model}</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start">
+      <!-- Left: Image + Details -->
+      <div>
+        <!-- Image Gallery -->
+        <div style="background:linear-gradient(135deg,var(--bg-card),var(--bg-secondary));border:1px solid var(--border-color);border-radius:var(--radius-xl);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:8rem;position:relative;margin-bottom:16px">
+          📱
+          <div style="position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:8px">
+            <span class="badge ${condBadge}">${listing.condition}</span>
+            ${listing.imeiVerified?'<span class="badge badge-imei-clean">✅ IMEI Vérifié</span>':'<span class="badge badge-used">⬜ IMEI non vérifié</span>'}
+          </div>
+          ${priceStatus!=='fair'&&priceStatus!=='unknown'?`<div style="position:absolute;bottom:16px;left:16px">${priceStatusHtml}</div>`:''}
+        </div>
+        <!-- Thumbnail strip -->
+        <div class="flex gap-sm mb-lg">
+          ${[...Array(3)].map((_,i)=>`<div style="width:80px;height:80px;background:var(--bg-card);border:2px solid ${i===0?'var(--accent-blue)':'var(--border-color)'};border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer">📱</div>`).join('')}
+        </div>
+
+        <!-- Specs table -->
+        <div class="card" style="margin-bottom:24px">
+          <div style="padding:20px;border-bottom:1px solid var(--border-color)"><div class="heading-3">Caractéristiques</div></div>
+          <div style="padding:0 20px">
+            ${[
+              ['Modèle','📱 '+listing.model],
+              ['Stockage','💾 '+listing.storage],
+              ['Couleur','🎨 '+listing.color],
+              ['État',''+listing.condition],
+              ['Batterie','🔋 '+listing.battery+'%'],
+              ['Wilaya','📍 '+listing.wilaya],
+              ['Disponibilité',listing.available==='Immediate'?'⚡ Immédiat':'🚚 Livraison disponible'],
+              ['IMEI',listing.imeiVerified?'✅ Vérifié & Propre':'⬜ Non vérifié'],
+            ].map(([label,val])=>`<div class="imei-row"><span class="imei-row-label">${label}</span><span class="imei-row-value">${val}</span></div>`).join('')}
+          </div>
+        </div>
+
+        <!-- Battery visual -->
+        <div class="card p-lg mb-lg">
+          <div class="flex items-center justify-between mb-md">
+            <div class="heading-3">Santé de la batterie</div>
+            <span class="battery-text ${battCls}">${listing.battery}%</span>
+          </div>
+          <div class="battery-bar" style="height:12px">
+            <div class="battery-fill ${battCls}" style="width:${listing.battery}%"></div>
+          </div>
+          <div class="flex justify-between text-xs text-muted mt-sm">
+            <span>0%</span><span style="color:${battCls==='high'?'var(--accent-green)':battCls==='mid'?'var(--accent-gold)':'var(--accent-red)'}">
+              ${listing.battery>=85?'Excellente':listing.battery>=70?'Bonne':'Réduite'}
+            </span><span>100%</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="card p-lg mb-lg">
+          <div class="heading-3 mb-md">Description du vendeur</div>
+          <p style="line-height:1.8;color:var(--text-secondary)">${listing.description}</p>
+        </div>
+
+        <!-- Market Price Widget -->
+        <div class="market-price-widget mb-lg">
+          <div class="flex items-center gap-sm mb-md">
+            <span style="font-size:1.25rem">🧠</span>
+            <div class="heading-3">Analyse IA du Prix</div>
+          </div>
+          <div class="flex items-center justify-between mb-md">
+            <div>
+              <div class="text-sm text-muted">Prix demandé</div>
+              <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700">${formatPrice(listing.price)}</div>
+            </div>
+            ${market?`<div style="text-align:right">
+              <div class="text-sm text-muted">Prix marché estimé</div>
+              <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:var(--text-secondary)">${formatPrice(market)}</div>
+            </div>`:''}
+          </div>
+          <div class="price-meter mb-sm"><div class="price-meter-fill ${meterCls}" style="width:${meterPct}%"></div></div>
+          <div class="flex justify-between text-xs text-muted"><span>Très bas</span><span>Marché</span><span>Élevé</span></div>
+          <div class="mt-md">${priceStatusHtml}</div>
+        </div>
+
+        <!-- Similar listings -->
+        ${similar.length?`<div>
+          <div class="heading-3 mb-md">Annonces similaires</div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+            ${similar.map(l=>`<div class="listing-card" onclick="window.location.href='listing.html?id=${l.id}'" style="cursor:pointer">
+              <div class="listing-card-image-placeholder" style="font-size:2.5rem">📱</div>
+              <div class="listing-card-body">
+                <div class="listing-card-title" style="font-size:0.875rem">${l.model}</div>
+                <div class="listing-card-specs"><span class="spec-chip">${l.storage}</span><span class="spec-chip">${l.condition}</span></div>
+                <div class="listing-card-price" style="font-size:1rem">${formatPrice(l.price)}</div>
+              </div>
+            </div>`).join('')}
+          </div>
+        </div>`:''}
+      </div>
+
+      <!-- Right: Sticky buy panel -->
+      <div style="position:sticky;top:calc(var(--nav-height)+16px)">
+        <div class="card p-xl mb-md">
+          <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin-bottom:4px">${formatPrice(listing.price)}</div>
+          <div class="flex items-center gap-sm mb-lg">
+            ${priceStatusHtml||'<span class="text-sm text-muted">iDz Price Intelligence</span>'}
+          </div>
+          <div class="flex flex-col gap-sm">
+            <button class="btn btn-primary w-full btn-lg" onclick="showToast('Message envoyé au vendeur !','success')">💬 Contacter le vendeur</button>
+            <a href="https://wa.me/${seller?.phone?.replace(/[^0-9]/g,'')}" class="btn btn-whatsapp w-full btn-lg">📲 WhatsApp</a>
+            <button class="btn btn-ghost w-full" onclick="showToast('Ajouté aux favoris','success')">🤍 Ajouter aux favoris</button>
+          </div>
+          <div class="divider" style="margin:16px 0"></div>
+          <a href="imei.html" class="flex items-center gap-sm text-sm" style="color:${listing.imeiVerified?'var(--accent-green)':'var(--text-muted)'}">
+            <span>${listing.imeiVerified?'✅':'⬜'}</span>
+            <span>${listing.imeiVerified?'IMEI vérifié et propre':'Vérifier l\'IMEI avant achat →'}</span>
+          </a>
+        </div>
+
+        <!-- Seller card -->
+        <div class="card p-lg">
+          <a href="profile.html?id=${seller?.id}" style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+            <div class="seller-avatar-lg" style="width:56px;height:56px;font-size:1.25rem">${seller?.initials||'?'}</div>
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <div class="font-semibold">${seller?.name||'Inconnu'}</div>
+                ${seller?.trusted?'<span class="badge badge-trusted">⭐ Pro</span>':''}
+                ${seller?.verified?'<span class="badge badge-verified">✓ Vérifié</span>':''}
+              </div>
+              <div class="text-sm text-muted">Membre depuis ${seller?.joinDate}</div>
+            </div>
+          </a>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+            <div class="text-center" style="background:var(--bg-glass-light);border-radius:var(--radius-md);padding:12px;border:1px solid var(--border-color)">
+              <div style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--accent-gold)">${seller?.rating}</div>
+              <div class="text-xs text-muted">Note</div>
+              ${renderStars(seller?.rating||0)}
+            </div>
+            <div class="text-center" style="background:var(--bg-glass-light);border-radius:var(--radius-md);padding:12px;border:1px solid var(--border-color)">
+              <div style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--accent-blue-light)">${seller?.sales}</div>
+              <div class="text-xs text-muted">Ventes</div>
+            </div>
+          </div>
+          <a href="profile.html?id=${seller?.id}" class="btn btn-ghost w-full btn-sm">Voir le profil complet →</a>
+        </div>
+      </div>
+    </div>`;
+});
+</script>
+<style>
+@media (max-width: 900px) {
+  #listing-content > div > div[style*="grid-template-columns:1fr 380px"] { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 768px) {
+  #listing-content .container { padding-top: 24px !important; padding-bottom: 48px !important; }
+}
+@media (max-width: 480px) {
+  #listing-content .market-price-widget { padding: 12px; }
+  #listing-content .btn-lg { width: 100%; }
+}
+</style>
+</body>
+</html>

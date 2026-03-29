@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vérification IMEI — iFindz</title>
+  <meta name="description" content="Vérifiez l'IMEI de votre iPhone gratuitement. Détection vol, blacklist, activation lock, et modèle.">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="toast-container" id="toast-container"></div>
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo"><span class="brand-text">iFindz</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="imei.html" class="nav-link active">Vérifier IMEI</a>
+      <a href="profile.html" class="nav-link">Mon Profil</a>
+      <a href="chat.html" class="nav-link">Messages</a>
+    </div>
+    <div class="nav-actions">
+      <a href="sell.html" class="btn btn-gold btn-sm">📱 Vendre</a>
+      <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="marketplace.html" class="nav-link">🛍️ Marketplace</a>
+  <a href="sell.html" class="nav-link">📱 Vendre mon iPhone</a>
+  <a href="imei.html" class="nav-link">🔍 Vérifier IMEI</a>
+</div>
+
+<div class="page-wrapper">
+  <!-- Hero -->
+  <div style="background:linear-gradient(135deg,var(--bg-secondary),var(--bg-card));border-bottom:1px solid var(--border-color);padding:64px 0;text-align:center;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(59,130,246,0.1),transparent);border-radius:50%"></div>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="section-tag" style="margin:0 auto 16px;display:inline-flex">🔍 Anti-Fraude</div>
+      <h1 class="display-2 mb-md">Vérification IMEI</h1>
+      <p class="text-lg text-muted" style="max-width:560px;margin:0 auto">
+        Avant d'acheter un iPhone, vérifiez son IMEI. Détection anti-vol, blacklist internationale, et activation lock.
+      </p>
+    </div>
+  </div>
+
+  <div class="container" style="max-width:720px;padding-top:48px;padding-bottom:80px">
+    <!-- How to find IMEI -->
+    <div class="card p-lg mb-xl" style="background:linear-gradient(135deg,rgba(59,130,246,0.05),rgba(139,92,246,0.05))">
+      <div class="heading-3 mb-md">📖 Comment trouver l'IMEI ?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="flex items-start gap-sm">
+          <span style="color:var(--accent-blue-light);font-size:1.25rem">📞</span>
+          <div><div class="font-medium text-sm">Sur l'iPhone</div><div class="text-sm text-muted">Composez *#06# sur le clavier</div></div>
+        </div>
+        <div class="flex items-start gap-sm">
+          <span style="color:var(--accent-gold);font-size:1.25rem">⚙️</span>
+          <div><div class="font-medium text-sm">Dans les Réglages</div><div class="text-sm text-muted">Réglages → Général → Informations</div></div>
+        </div>
+        <div class="flex items-start gap-sm">
+          <span style="color:var(--accent-green);font-size:1.25rem">📦</span>
+          <div><div class="font-medium text-sm">Sur la boite</div><div class="text-sm text-muted">Code-barres au dos de la boite</div></div>
+        </div>
+        <div class="flex items-start gap-sm">
+          <span style="color:var(--accent-purple);font-size:1.25rem">🔧</span>
+          <div><div class="font-medium text-sm">Dos de l'appareil</div><div class="text-sm text-muted">Gravé sur certains modèles anciens</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMEI Input -->
+    <div class="card p-xl mb-lg">
+      <div class="heading-2 mb-sm">Entrez le numéro IMEI</div>
+      <p class="text-muted mb-lg">15 chiffres — format automatiquement détecté</p>
+      <div class="imei-input-group">
+        <input type="text" id="imei-input" class="form-input" placeholder="ex: 354 899 12 345678 9" maxlength="15" style="font-family:monospace;font-size:1.25rem;letter-spacing:2px;text-align:center" inputmode="numeric">
+        <button id="imei-check-btn" class="btn btn-primary btn-lg" style="white-space:nowrap">🔍 Vérifier</button>
+      </div>
+      <div id="imei-loader" class="hidden mt-md" style="text-align:center;color:var(--text-muted);font-size:0.875rem">Consultation des bases de données…</div>
+      <!-- Quick test IMEIs -->
+      <div class="mt-md">
+        <div class="text-xs text-muted mb-sm">Tester avec :</div>
+        <div class="flex gap-sm" style="flex-wrap:wrap">
+          <button class="filter-chip" onclick="document.getElementById('imei-input').value='353800109837531'">✅ IMEI propre</button>
+          <button class="filter-chip" onclick="document.getElementById('imei-input').value='354663108491987'">🚨 IMEI suspect</button>
+          <button class="filter-chip" onclick="document.getElementById('imei-input').value='123456789012345'">❌ IMEI invalide</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result will be injected here -->
+    <div id="imei-result"></div>
+
+    <!-- Info cards -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:48px">
+      <div class="card p-lg">
+        <div style="font-size:2rem;margin-bottom:12px">🔒</div>
+        <div class="font-semibold mb-sm">Blacklist Internationale</div>
+        <div class="text-sm text-muted">Vérification contre les bases GSMA, opérateurs Européens et Algériens.</div>
+      </div>
+      <div class="card p-lg">
+        <div style="font-size:2rem;margin-bottom:12px">🍎</div>
+        <div class="font-semibold mb-sm">Activation Lock</div>
+        <div class="text-sm text-muted">Détection si l'appareil est lié à un compte iCloud actif (FMI).</div>
+      </div>
+      <div class="card p-lg">
+        <div style="font-size:2rem;margin-bottom:12px">🚨</div>
+        <div class="font-semibold mb-sm">Signalement Vol</div>
+        <div class="text-sm text-muted">Base de données des appareils signalés volés en Algérie et à l'international.</div>
+      </div>
+      <div class="card p-lg">
+        <div style="font-size:2rem;margin-bottom:12px">📋</div>
+        <div class="font-semibold mb-sm">Identification Modèle</div>
+        <div class="text-sm text-muted">Identification du fabricant et du modèle via le code TAC intégré.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/imei.js"></script>
+<style>
+@media (max-width: 768px) {
+  .page-wrapper > div:first-child { padding: 40px 0 !important; }
+  #imei-input { font-size: 1rem !important; letter-spacing: 1px !important; }
+}
+@media (max-width: 480px) {
+  .page-wrapper .card.p-lg { padding: 16px; }
+  #imei-input { font-size: 0.95rem !important; }
+}
+</style>
+</body>
+</html>
+

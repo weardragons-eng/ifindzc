@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vérification d'identité — iFindz</title>
+  <meta name="description" content="Vérifiez votre identité pour débloquer la vente sur iFindz. Carte nationale requise pour la sécurité de tous.">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo"><span class="brand-text">iFindz</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="imei.html" class="nav-link">Vérifier IMEI</a>
+      <a href="profile.html" class="nav-link">Mon Profil</a>
+      <a href="chat.html" class="nav-link">Messages</a>
+    </div>
+    <div class="nav-actions">
+      <a href="sell.html" class="btn btn-gold btn-sm">📱 Vendre</a>
+      <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="marketplace.html" class="nav-link">🛍️ Marketplace</a>
+  <a href="imei.html" class="nav-link">🔍 Vérifier IMEI</a>
+  <a href="profile.html" class="nav-link">👤 Mon Profil</a>
+</div>
+
+<div class="page-wrapper">
+  <div class="verification-page">
+    <!-- Header -->
+    <div class="verification-header">
+      <div class="container" style="max-width:700px">
+        <div class="text-center animate-slide-up">
+          <div class="verification-shield-icon">🛡️</div>
+          <h1 class="heading-1 mb-sm">Vérification d'identité</h1>
+          <p class="text-muted text-lg">Pour vendre sur iFindz, votre identité doit être vérifiée. Cela protège les acheteurs et renforce la confiance au sein de la communauté.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="max-width:700px;padding-top:40px;padding-bottom:80px">
+      <!-- Current Status Card -->
+      <div id="verification-status-card" class="verification-status-card animate-slide-up">
+        <!-- Filled by JS -->
+      </div>
+
+      <!-- Not Verified: Upload Form -->
+      <div id="verification-form-section" class="hidden animate-slide-up">
+        <!-- Why verify -->
+        <div class="card p-lg mb-lg" style="background:linear-gradient(135deg,rgba(59,130,246,0.06),rgba(139,92,246,0.06))">
+          <div class="heading-3 mb-md">Pourquoi vérifier votre identité ?</div>
+          <div class="verification-why-grid">
+            <div class="verification-why-item">
+              <span class="verification-why-icon">🔒</span>
+              <div>
+                <div class="font-semibold text-sm">Sécurité</div>
+                <div class="text-xs text-muted">Empêche les arnaques et protège les acheteurs</div>
+              </div>
+            </div>
+            <div class="verification-why-item">
+              <span class="verification-why-icon">⭐</span>
+              <div>
+                <div class="font-semibold text-sm">Badge vérifié</div>
+                <div class="text-xs text-muted">Vos annonces gagnent en visibilité</div>
+              </div>
+            </div>
+            <div class="verification-why-item">
+              <span class="verification-why-icon">⚡</span>
+              <div>
+                <div class="font-semibold text-sm">Vente rapide</div>
+                <div class="text-xs text-muted">Les acheteurs font confiance aux vendeurs vérifiés</div>
+              </div>
+            </div>
+            <div class="verification-why-item">
+              <span class="verification-why-icon">🇩🇿</span>
+              <div>
+                <div class="font-semibold text-sm">Carte nationale</div>
+                <div class="text-xs text-muted">Seul document accepté</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="card p-xl mb-lg">
+          <div class="heading-3 mb-sm">📤 Télécharger votre pièce d'identité</div>
+          <p class="text-sm text-muted mb-lg">Uploadez une photo claire de votre carte nationale (recto). Les informations sont traitées de manière confidentielle.</p>
+
+          <div class="verification-upload-zone" id="upload-zone">
+            <div class="verification-upload-icon">🪪</div>
+            <div class="font-semibold mb-sm">Cliquez ou glissez votre carte nationale</div>
+            <div class="text-sm text-muted">JPG, PNG · Max 5 Mo · Recto uniquement</div>
+            <input type="file" id="id-file-input" accept="image/*" style="display:none">
+          </div>
+
+          <!-- File preview -->
+          <div id="file-preview" class="verification-file-preview hidden">
+            <div class="verification-file-info">
+              <span class="verification-file-icon">📄</span>
+              <div>
+                <div class="font-medium text-sm" id="file-name">—</div>
+                <div class="text-xs text-muted" id="file-size">—</div>
+              </div>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="remove-file">✕ Retirer</button>
+          </div>
+
+          <div class="verification-requirements mt-lg">
+            <div class="text-xs font-semibold text-muted mb-sm" style="text-transform:uppercase;letter-spacing:0.05em">Exigences :</div>
+            <div class="verification-req-item">
+              <span style="color:var(--accent-green)">✓</span>
+              <span class="text-sm text-muted">Photo nette et lisible</span>
+            </div>
+            <div class="verification-req-item">
+              <span style="color:var(--accent-green)">✓</span>
+              <span class="text-sm text-muted">Carte nationale algérienne valide</span>
+            </div>
+            <div class="verification-req-item">
+              <span style="color:var(--accent-green)">✓</span>
+              <span class="text-sm text-muted">Nom complet visible</span>
+            </div>
+            <div class="verification-req-item">
+              <span style="color:var(--accent-red)">✗</span>
+              <span class="text-sm text-muted">Pas de capture d'écran ou photo floue</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button class="btn btn-primary btn-lg w-full" id="submit-verification" disabled style="font-size:1.05rem;padding:18px">
+          🛡️ Soumettre pour vérification
+        </button>
+        <p class="text-center text-sm text-muted mt-md">La vérification est généralement traitée en moins de 24 heures.</p>
+      </div>
+
+      <!-- Pending State -->
+      <div id="verification-pending-section" class="hidden animate-slide-up">
+        <div class="verification-pending-card">
+          <div class="verification-pending-icon">
+            <div class="verification-spinner-ring"></div>
+            <span>⏳</span>
+          </div>
+          <h2 class="heading-2 mb-sm">Vérification en cours</h2>
+          <p class="text-muted mb-lg">Votre document a été reçu et est en cours de vérification par notre équipe. Vous serez notifié dès la validation.</p>
+          <div class="verification-timeline">
+            <div class="verification-timeline-item done">
+              <div class="verification-timeline-dot done"></div>
+              <div>
+                <div class="font-semibold text-sm">Document soumis</div>
+                <div class="text-xs text-muted">Reçu avec succès</div>
+              </div>
+            </div>
+            <div class="verification-timeline-item active">
+              <div class="verification-timeline-dot active"></div>
+              <div>
+                <div class="font-semibold text-sm">Vérification en cours</div>
+                <div class="text-xs text-muted">Notre équipe examine votre document</div>
+              </div>
+            </div>
+            <div class="verification-timeline-item">
+              <div class="verification-timeline-dot"></div>
+              <div>
+                <div class="font-semibold text-sm">Validation</div>
+                <div class="text-xs text-muted">Badge vérifié activé</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-xl">
+            <a href="marketplace.html" class="btn btn-secondary btn-lg">🛍️ Parcourir le marketplace en attendant</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verified State -->
+      <div id="verification-verified-section" class="hidden animate-slide-up">
+        <div class="verification-verified-card">
+          <div class="verification-verified-icon">✅</div>
+          <h2 class="heading-1 mb-sm"><span class="gradient-text">Identité vérifiée !</span></h2>
+          <p class="text-lg text-muted mb-lg">Votre compte est maintenant vérifié. Vous pouvez publier des annonces et vendre vos iPhones sur iDz.</p>
+          <div class="verification-perks">
+            <div class="verification-perk">
+              <span>📱</span>
+              <span>Publier des annonces</span>
+            </div>
+            <div class="verification-perk">
+              <span>⭐</span>
+              <span>Badge vendeur vérifié</span>
+            </div>
+            <div class="verification-perk">
+              <span>📊</span>
+              <span>Prix IA suggérés</span>
+            </div>
+            <div class="verification-perk">
+              <span>💬</span>
+              <span>Messagerie acheteurs</span>
+            </div>
+          </div>
+          <div class="flex gap-md justify-center mt-xl" style="flex-wrap:wrap">
+            <a href="sell.html" class="btn btn-gold btn-lg">📱 Publier une annonce</a>
+            <a href="marketplace.html" class="btn btn-primary btn-lg">🛍️ Voir le marketplace</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Require login
+  if (!isLoggedIn()) {
+    window.location.href = 'login.html?redirect=' + encodeURIComponent('verification.html');
+    return;
+  }
+
+  const user = getCurrentUser();
+  const status = user.verificationStatus;
+  const statusCard = document.getElementById('verification-status-card');
+
+  // Render status card
+  function renderStatusCard() {
+    const currentUser = getCurrentUser();
+    const s = currentUser.verificationStatus;
+    const statusMap = {
+      'not_verified': { icon: '🔒', label: 'Non vérifié', desc: 'Uploadez votre carte nationale pour débloquer la vente.', badge: 'badge-not-verified', color: 'var(--accent-red)' },
+      'pending': { icon: '⏳', label: 'En attente de vérification', desc: 'Votre document est en cours d\'examen.', badge: 'badge-pending', color: 'var(--accent-gold)' },
+      'verified': { icon: '✅', label: 'Identité vérifiée', desc: 'Vous pouvez publier des annonces et vendre librement.', badge: 'badge-id-verified', color: 'var(--accent-green)' }
+    };
+    const info = statusMap[s];
+    statusCard.innerHTML = `
+      <div class="flex items-center gap-lg" style="flex-wrap:wrap">
+        <div class="verification-status-icon" style="background:${info.color}20;border-color:${info.color}40">
+          <span style="font-size:2rem">${info.icon}</span>
+        </div>
+        <div style="flex:1">
+          <div class="flex items-center gap-sm mb-sm" style="flex-wrap:wrap">
+            <div class="heading-3">Statut actuel</div>
+            <span class="badge ${info.badge}">${info.label}</span>
+          </div>
+          <p class="text-sm text-muted">${info.desc}</p>
+        </div>
+      </div>
+    `;
+  }
+  renderStatusCard();
+
+  // Show the right section based on status
+  function showSection() {
+    const currentUser = getCurrentUser();
+    const s = currentUser.verificationStatus;
+    document.getElementById('verification-form-section').classList.toggle('hidden', s !== 'not_verified');
+    document.getElementById('verification-pending-section').classList.toggle('hidden', s !== 'pending');
+    document.getElementById('verification-verified-section').classList.toggle('hidden', s !== 'verified');
+  }
+  showSection();
+
+  // Upload zone logic
+  const uploadZone = document.getElementById('upload-zone');
+  const fileInput = document.getElementById('id-file-input');
+  const filePreview = document.getElementById('file-preview');
+  const fileNameEl = document.getElementById('file-name');
+  const fileSizeEl = document.getElementById('file-size');
+  const removeBtn = document.getElementById('remove-file');
+  const submitBtn = document.getElementById('submit-verification');
+  let selectedFile = null;
+
+  uploadZone?.addEventListener('click', () => fileInput?.click());
+
+  uploadZone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadZone.classList.add('drag-over');
+  });
+  uploadZone?.addEventListener('dragleave', () => {
+    uploadZone.classList.remove('drag-over');
+  });
+  uploadZone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+
+  fileInput?.addEventListener('change', () => {
+    if (fileInput.files.length) handleFile(fileInput.files[0]);
+  });
+
+  function handleFile(file) {
+    if (!file.type.startsWith('image/')) {
+      showToast('Veuillez sélectionner une image (JPG, PNG)', 'error');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('Le fichier est trop volumineux (max 5 Mo)', 'error');
+      return;
+    }
+    selectedFile = file;
+    fileNameEl.textContent = file.name;
+    fileSizeEl.textContent = (file.size / 1024 / 1024).toFixed(2) + ' Mo';
+    filePreview.classList.remove('hidden');
+    uploadZone.style.display = 'none';
+    submitBtn.disabled = false;
+  }
+
+  removeBtn?.addEventListener('click', () => {
+    selectedFile = null;
+    filePreview.classList.add('hidden');
+    uploadZone.style.display = '';
+    fileInput.value = '';
+    submitBtn.disabled = true;
+  });
+
+  // Submit verification
+  submitBtn?.addEventListener('click', () => {
+    if (!selectedFile) {
+      showToast('Veuillez sélectionner votre carte nationale', 'error');
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="auth-spinner"></span> Envoi en cours…';
+
+    setTimeout(() => {
+      submitVerification(selectedFile.name);
+      showToast('Document soumis avec succès ! Vérification en cours…', 'success');
+      renderStatusCard();
+      showSection();
+      
+      // Poll for verification completion (demo: auto-approves in 5s)
+      const pollInterval = setInterval(() => {
+        const freshUser = getCurrentUser();
+        if (freshUser && freshUser.verificationStatus === 'verified') {
+          clearInterval(pollInterval);
+          renderStatusCard();
+          showSection();
+          showToast('🎉 Identité vérifiée ! Vous pouvez maintenant vendre.', 'success');
+        }
+      }, 2000);
+    }, 2000);
+  });
+});
+</script>
+</body>
+</html>

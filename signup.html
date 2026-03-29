@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Créer un compte — iFindz</title>
+  <meta name="description" content="Créez votre compte iFindz gratuit et commencez à acheter et vendre des iPhones en toute sécurité en Algérie.">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo"><span class="brand-text">iFindz</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="imei.html" class="nav-link">Vérifier IMEI</a>
+    </div>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-secondary btn-sm">🔑 Connexion</a>
+      <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="marketplace.html" class="nav-link">🛍️ Marketplace</a>
+  <a href="imei.html" class="nav-link">🔍 Vérifier IMEI</a>
+  <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px">
+    <a href="login.html" class="btn btn-secondary btn-lg w-full">🔑 Connexion</a>
+  </div>
+</div>
+
+<!-- Auth Page -->
+<div class="auth-page">
+  <div class="auth-bg-orbs">
+    <div class="auth-orb auth-orb-1"></div>
+    <div class="auth-orb auth-orb-2"></div>
+    <div class="auth-orb auth-orb-3"></div>
+  </div>
+  <div class="auth-grid-lines"></div>
+
+  <div class="auth-container animate-slide-up">
+    <!-- Left: Trust info -->
+    <div class="auth-info">
+      <div class="auth-info-inner">
+        <div class="section-tag" style="margin-bottom:24px">🚀 Rejoignez la communauté</div>
+        <h1 class="display-2" style="margin-bottom:16px">
+          Rejoignez<br><span class="gradient-text">iFindz</span>
+        </h1>
+        <p class="text-lg text-muted" style="line-height:1.7;margin-bottom:32px">
+          Créez votre compte gratuit et commencez à acheter ou vendre des iPhones vérifiés dans les 58 wilayas d'Algérie sur iFindz.
+        </p>
+        <div class="auth-trust-features">
+          <div class="auth-trust-item">
+            <div class="auth-trust-icon">📱</div>
+            <div>
+              <div class="font-semibold">Parcourir immédiatement</div>
+              <div class="text-sm text-muted">Accédez au marketplace dès la création</div>
+            </div>
+          </div>
+          <div class="auth-trust-item">
+            <div class="auth-trust-icon">🛡️</div>
+            <div>
+              <div class="font-semibold">Vérification pour vendre</div>
+              <div class="text-sm text-muted">Carte nationale requise — zéro arnaque</div>
+            </div>
+          </div>
+          <div class="auth-trust-item">
+            <div class="auth-trust-icon">⚡</div>
+            <div>
+              <div class="font-semibold">Vente ultra-rapide</div>
+              <div class="text-sm text-muted">En moyenne, un iPhone se vend en 48h</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Signup form -->
+    <div class="auth-form-panel">
+      <div class="auth-form-wrapper">
+        <div class="auth-form-header">
+          <h2 class="heading-1">Créer un compte</h2>
+          <p class="text-muted mt-sm">Inscription gratuite en 30 secondes</p>
+        </div>
+
+        <form id="signup-form" class="auth-form" autocomplete="on">
+          <div class="form-group">
+            <label class="form-label" for="signup-name">Nom complet</label>
+            <div class="auth-input-wrapper">
+              <span class="auth-input-icon">👤</span>
+              <input type="text" class="form-input auth-input" id="signup-name" placeholder="Prénom et nom" required autocomplete="name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signup-email">Adresse email</label>
+            <div class="auth-input-wrapper">
+              <span class="auth-input-icon">📧</span>
+              <input type="email" class="form-input auth-input" id="signup-email" placeholder="votre@email.com" required autocomplete="email">
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="form-group">
+              <label class="form-label" for="signup-phone">Téléphone</label>
+              <div class="auth-input-wrapper">
+                <span class="auth-input-icon">📱</span>
+                <input type="tel" class="form-input auth-input" id="signup-phone" placeholder="+213 5XX..." required autocomplete="tel">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="signup-wilaya">Wilaya</label>
+              <select class="form-select" id="signup-wilaya" required></select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signup-password">Mot de passe</label>
+            <div class="auth-input-wrapper">
+              <span class="auth-input-icon">🔑</span>
+              <input type="password" class="form-input auth-input" id="signup-password" placeholder="Min. 6 caractères" required minlength="6" autocomplete="new-password">
+              <button type="button" class="auth-password-toggle" id="toggle-password" tabindex="-1">👁️</button>
+            </div>
+            <div class="auth-password-strength" id="pw-strength">
+              <div class="auth-pw-bar"><div class="auth-pw-bar-fill" id="pw-strength-fill"></div></div>
+              <span class="auth-pw-label text-xs" id="pw-strength-label"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signup-confirm">Confirmer le mot de passe</label>
+            <div class="auth-input-wrapper">
+              <span class="auth-input-icon">🔐</span>
+              <input type="password" class="form-input auth-input" id="signup-confirm" placeholder="Répétez le mot de passe" required autocomplete="new-password">
+            </div>
+          </div>
+
+          <div id="signup-error" class="auth-error hidden"></div>
+
+          <div class="auth-terms">
+            <label class="auth-checkbox-label">
+              <input type="checkbox" id="signup-terms" required>
+              <span class="text-sm text-muted">J'accepte les <a href="#" style="color:var(--accent-blue-light)">CGU</a> et la <a href="#" style="color:var(--accent-blue-light)">Politique de confidentialité</a></span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg w-full auth-submit-btn" id="signup-submit">
+            <span class="auth-btn-text">Créer mon compte</span>
+            <span class="auth-btn-loader hidden" id="signup-loader">
+              <span class="auth-spinner"></span>
+            </span>
+          </button>
+
+          <div class="auth-info-box">
+            <span>🛡️</span>
+            <span class="text-sm text-muted">Marketplace sécurisé — la vérification d'identité est requise pour les vendeurs.</span>
+          </div>
+        </form>
+
+        <div class="auth-divider">
+          <span>ou</span>
+        </div>
+
+        <div class="auth-alt-action">
+          <p class="text-muted">Vous avez déjà un compte ?</p>
+          <a href="login.html" class="btn btn-secondary w-full">🔑 Se connecter</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // If already logged in, redirect
+  if (isLoggedIn()) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // Populate wilayas
+  const wilayaSelect = document.getElementById('signup-wilaya');
+  if (wilayaSelect) {
+    wilayaSelect.innerHTML = '<option value="">Sélectionner…</option>' +
+      WILAYAS.map(w => `<option value="${w}">${w}</option>`).join('');
+  }
+
+  const form = document.getElementById('signup-form');
+  const errorEl = document.getElementById('signup-error');
+  const loader = document.getElementById('signup-loader');
+  const submitBtn = document.getElementById('signup-submit');
+  const togglePw = document.getElementById('toggle-password');
+  const pwInput = document.getElementById('signup-password');
+  const pwStrengthFill = document.getElementById('pw-strength-fill');
+  const pwStrengthLabel = document.getElementById('pw-strength-label');
+
+  // Toggle password visibility
+  togglePw?.addEventListener('click', () => {
+    const type = pwInput.type === 'password' ? 'text' : 'password';
+    pwInput.type = type;
+    togglePw.textContent = type === 'password' ? '👁️' : '🙈';
+  });
+
+  // Password strength
+  pwInput?.addEventListener('input', () => {
+    const pw = pwInput.value;
+    let strength = 0;
+    if (pw.length >= 6) strength++;
+    if (pw.length >= 10) strength++;
+    if (/[A-Z]/.test(pw)) strength++;
+    if (/[0-9]/.test(pw)) strength++;
+    if (/[^A-Za-z0-9]/.test(pw)) strength++;
+
+    const pct = Math.min(100, (strength / 5) * 100);
+    const colors = ['var(--accent-red)', 'var(--accent-red)', 'var(--accent-gold)', 'var(--accent-green)', 'var(--accent-green)'];
+    const labels = ['', 'Faible', 'Moyen', 'Bon', 'Excellent'];
+
+    if (pwStrengthFill) {
+      pwStrengthFill.style.width = pct + '%';
+      pwStrengthFill.style.background = colors[strength - 1] || 'var(--border-color)';
+    }
+    if (pwStrengthLabel) {
+      pwStrengthLabel.textContent = labels[strength] || '';
+      pwStrengthLabel.style.color = colors[strength - 1] || 'var(--text-muted)';
+    }
+  });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    errorEl.classList.add('hidden');
+
+    const fullName = document.getElementById('signup-name').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const phone = document.getElementById('signup-phone').value.trim();
+    const wilaya = document.getElementById('signup-wilaya').value;
+    const password = document.getElementById('signup-password').value;
+    const confirmPw = document.getElementById('signup-confirm').value;
+    const terms = document.getElementById('signup-terms').checked;
+
+    // Validation
+    if (!fullName || !email || !phone || !wilaya || !password || !confirmPw) {
+      errorEl.textContent = 'Veuillez remplir tous les champs.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+    if (fullName.split(' ').length < 2) {
+      errorEl.textContent = 'Veuillez entrer votre prénom et nom.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+    if (password.length < 6) {
+      errorEl.textContent = 'Le mot de passe doit contenir au moins 6 caractères.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+    if (password !== confirmPw) {
+      errorEl.textContent = 'Les mots de passe ne correspondent pas.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+    if (!terms) {
+      errorEl.textContent = 'Veuillez accepter les conditions d\'utilisation.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+
+    // Show loading
+    submitBtn.disabled = true;
+    loader.classList.remove('hidden');
+    submitBtn.querySelector('.auth-btn-text').textContent = 'Création du compte…';
+
+    setTimeout(() => {
+      const result = registerUser({ fullName, email, phone, password, wilaya });
+      if (result.success) {
+        showToast('Compte créé avec succès ! Bienvenue sur iDz 🎉', 'success');
+        setTimeout(() => {
+          window.location.href = 'verification.html';
+        }, 1000);
+      } else {
+        errorEl.textContent = result.error;
+        errorEl.classList.remove('hidden');
+        submitBtn.disabled = false;
+        loader.classList.add('hidden');
+        submitBtn.querySelector('.auth-btn-text').textContent = 'Créer mon compte';
+        form.classList.add('auth-shake');
+        setTimeout(() => form.classList.remove('auth-shake'), 500);
+      }
+    }, 1500);
+  });
+});
+</script>
+
+<style>
+@media (max-width: 768px) {
+  .auth-form [style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+</body>
+</html>

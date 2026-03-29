@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Vendeur — iFindz</title>
+  <meta name="description" content="Découvrez les annonces et les avis du vendeur sur iFindz — le marketplace iPhone premium en Algérie.">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="toast-container" id="toast-container"></div>
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo"><span class="brand-text">iFindz</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="imei.html" class="nav-link">Vérifier IMEI</a>
+      <a href="profile.html" class="nav-link active">Mon Profil</a>
+      <a href="chat.html" class="nav-link">Messages</a>
+    </div>
+    <div class="nav-actions">
+      <a href="sell.html" class="btn btn-gold btn-sm">📱 Vendre</a>
+      <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="marketplace.html" class="nav-link">🛍️ Marketplace</a>
+  <a href="sell.html" class="nav-link">📱 Vendre</a>
+  <a href="imei.html" class="nav-link">🔍 IMEI</a>
+</div>
+
+<div class="page-wrapper" id="profile-content">
+  <div class="text-center" style="padding:64px"><div style="font-size:2rem">⏳</div></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script>
+const REVIEWS = [
+  { author:'Khalil B.', rating:5, text:"Transaction rapide et iPhone exactement comme décrit. Vendeur très sérieux !", date:"Il y a 3 jours", initials:'KB' },
+  { author:'Sara M.', rating:5, text:"Livraison le soir même ! Appareil impeccable, IMEI vérifié. Je recommande à 100%.", date:"Il y a 1 semaine", initials:'SM' },
+  { author:'Omar T.', rating:4, text:"Bonne expérience globalement. Communication facile et prix honnête.", date:"Il y a 2 semaines", initials:'OT' },
+  { author:'Lynda K.', rating:5, text:"C'est mon deuxième achat chez ce vendeur. Toujours au top !", date:"Il y a 1 mois", initials:'LK' },
+  { author:'Farid D.', rating:5, text:"iPhone 15 Pro reçu en parfait état, même que sur les photos.", date:"Il y a 1 mois", initials:'FD' },
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(location.search);
+  const id = parseInt(params.get('id')) || 1;
+  const seller = getSellerById(id) || SELLERS[0];
+  const myListings = LISTINGS.filter(l=>l.sellerId===seller.id);
+  const active = myListings.filter(l=>true); // all active for demo
+  const sold = myListings.slice(0,2); // simulate 2 sold
+  document.title = `${seller.name} — iFindz`;
+
+  document.getElementById('profile-content').innerHTML = `
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="container">
+        <div class="flex items-center gap-xl" style="flex-wrap:wrap;gap:24px">
+          <div class="seller-avatar-lg">${seller.initials}</div>
+          <div style="flex:1">
+            <div class="flex items-center gap-md" style="flex-wrap:wrap;margin-bottom:8px">
+              <h1 class="heading-1">${seller.name}</h1>
+              ${seller.trusted?'<span class="badge badge-trusted" style="font-size:0.875rem;padding:6px 14px">⭐ Vendeur Pro</span>':''}
+              ${seller.verified?'<span class="badge badge-verified" style="font-size:0.875rem;padding:6px 14px">✓ Identité Vérifiée</span>':''}
+            </div>
+            <div class="flex items-center gap-md text-muted text-sm" style="flex-wrap:wrap">
+              <span>📍 ${seller.wilaya}</span>
+              <span>📅 Membre depuis ${seller.joinDate}</span>
+              <span>📱 ${seller.sales} ventes réalisées</span>
+            </div>
+          </div>
+          <div class="flex gap-md">
+            <a href="chat.html" class="btn btn-primary">💬 Contacter</a>
+            <button class="btn btn-ghost" onclick="showToast('Vendeur signalé','info')">⚡</button>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px">
+          <div style="background:var(--bg-glass);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:16px;text-align:center">
+            <div style="font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--accent-gold)">${seller.rating}</div>
+            <div>${renderStars(seller.rating)}</div>
+            <div class="text-xs text-muted">${seller.reviews} avis</div>
+          </div>
+          <div style="background:var(--bg-glass);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:16px;text-align:center">
+            <div style="font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--accent-blue-light)">${seller.sales}</div>
+            <div class="text-xs text-muted">Ventes totales</div>
+          </div>
+          <div style="background:var(--bg-glass);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:16px;text-align:center">
+            <div style="font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--accent-green)">${Math.round(seller.rating*20)}%</div>
+            <div class="text-xs text-muted">Taux satisfaction</div>
+          </div>
+          <div style="background:var(--bg-glass);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:16px;text-align:center">
+            <div style="font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--accent-purple)">< 1h</div>
+            <div class="text-xs text-muted">Temps de réponse</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="padding-top:32px;padding-bottom:64px">
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:32px;align-items:start">
+        <!-- Left -->
+        <div>
+          <!-- Listings tabs -->
+          <div class="tabs mb-lg">
+            <button class="tab-btn active" onclick="switchTab(this,'tab-active')">📱 Annonces actives (${active.length})</button>
+            <button class="tab-btn" onclick="switchTab(this,'tab-sold')">✅ Vendus (${sold.length})</button>
+          </div>
+
+          <div id="tab-active" class="listings-grid">
+            ${active.map(renderListingCard).join('')}
+          </div>
+
+          <div id="tab-sold" class="hidden listings-grid">
+            ${sold.map(l=>`<div class="listing-card" style="opacity:0.65;position:relative">
+              <div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);z-index:10;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center"><span class="badge badge-good-deal" style="font-size:1rem;padding:10px 20px">✅ Vendu</span></div>
+              <div class="listing-card-image-placeholder" style="font-size:3rem">📱</div>
+              <div class="listing-card-body">
+                <div class="listing-card-title">${l.model}</div>
+                <div class="listing-card-price">${formatPrice(l.price)}</div>
+              </div>
+            </div>`).join('')}
+          </div>
+        </div>
+
+        <!-- Right: Reviews -->
+        <div>
+          <div class="card p-lg mb-md">
+            <div class="heading-3 mb-lg">Avis clients</div>
+            <div style="display:flex;flex-direction:column;gap:16px">
+              ${REVIEWS.map(r=>`<div style="padding-bottom:16px;border-bottom:1px solid var(--border-color)">
+                <div class="flex items-center gap-sm mb-sm">
+                  <div style="width:32px;height:32px;border-radius:50%;background:var(--gradient-accent);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0">${r.initials}</div>
+                  <div><div class="font-medium text-sm">${r.author}</div><div>${renderStars(r.rating)}</div></div>
+                  <div class="text-xs text-muted" style="margin-left:auto">${r.date}</div>
+                </div>
+                <p class="text-sm text-muted">${r.text}</p>
+              </div>`).join('')}
+            </div>
+          </div>
+          ${seller.trusted?`<div class="card p-lg" style="background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(239,68,68,0.08));border-color:rgba(245,158,11,0.3)">
+            <div class="flex items-center gap-sm mb-sm"><span style="font-size:1.5rem">🏅</span><div class="font-semibold">Vendeur Pro Certifié</div></div>
+            <p class="text-sm text-muted">Ce vendeur a été vérifié par l'équipe iDz. Identité confirmée, historique exemplaire.</p>
+          </div>`:''}
+        </div>
+      </div>
+    </div>`;
+
+  function switchTab(btn, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-active').classList.add('hidden');
+    document.getElementById('tab-sold').classList.add('hidden');
+    document.getElementById(tabId).classList.remove('hidden');
+  }
+  window.switchTab = switchTab;
+});
+</script>
+<style>
+@media (max-width: 768px) {
+  #profile-content .container > div[style*="grid-template-columns:2fr 1fr"] { grid-template-columns: 1fr !important; }
+  .profile-header .container > div:first-child[style*="flex"] { flex-direction: column; align-items: flex-start !important; }
+  .profile-header .container > div:nth-child(2) { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 480px) {
+  .profile-header .container > div:nth-child(2) { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+  .profile-header .container > div:nth-child(2) .card { padding: 12px !important; }
+  .profile-header .container > div:nth-child(2) .stat-value { font-size: 1rem; }
+  .profile-header .container > div:first-child .flex.gap-md { flex-wrap: wrap; }
+}
+</style>
+</body>
+</html>
+

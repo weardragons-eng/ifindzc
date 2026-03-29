@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iFindz — Le Marketplace iPhone Premium</title>
+  <meta name="description" content="Achetez et vendez votre iPhone en toute sécurité avec iFindz. Vérification IMEI, prix du marché en temps réel, vendeurs certifiés.">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo">
+      <span class="brand-text">iFindz</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link active">Accueil</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="imei.html" class="nav-link">Vérifier IMEI</a>
+      <a href="profile.html" class="nav-link">Mon Profil</a>
+      <a href="chat.html" class="nav-link">Messages</a>
+    </div>
+    <div class="nav-actions">
+      <a href="sell.html" class="btn btn-gold btn-sm">📱 Vendre</a>
+      <a href="marketplace.html" class="btn btn-primary btn-sm">Acheter</a>
+      <button class="nav-hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="marketplace.html" class="nav-link">🛍️ Marketplace</a>
+  <a href="imei.html" class="nav-link">🔍 Vérifier IMEI</a>
+  <a href="sell.html" class="nav-link">📱 Vendre mon iPhone</a>
+  <a href="profile.html" class="nav-link">👤 Mon Profil</a>
+  <a href="chat.html" class="nav-link">💬 Messages</a>
+  <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px">
+    <a href="sell.html" class="btn btn-gold btn-lg w-full">📱 Publier une annonce</a>
+    <a href="marketplace.html" class="btn btn-primary btn-lg w-full">🔎 Parcourir les offres</a>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="container hero-content" style="padding-top:48px;padding-bottom:48px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
+      <div class="animate-slide-up">
+        <div class="section-tag">🇩🇿 Le N°1 en Algérie</div>
+        <h1 class="display-1" style="margin-bottom:24px">
+          Ton iPhone<br>
+          <span class="gradient-text">Trouvé.</span><br>
+          Vendu.
+        </h1>
+        <p class="text-lg text-muted" style="max-width:480px;margin-bottom:32px;line-height:1.7">
+          Le marketplace iPhone le plus premium d'Algérie. Vérification IMEI, prix du marché en temps réel, vendeurs certifiés. Zéro arnaque.
+        </p>
+        <div class="flex gap-md" style="flex-wrap:wrap">
+          <a href="marketplace.html" class="btn btn-primary btn-lg">🔎 Trouver un iPhone</a>
+          <a href="sell.html" class="btn btn-gold btn-lg">📱 Vendre le mien</a>
+        </div>
+        <div class="flex gap-md mt-lg" style="flex-wrap:wrap">
+          <div class="flex items-center gap-sm text-sm text-muted"><span style="color:var(--accent-green)">✓</span> IMEI Vérifié</div>
+          <div class="flex items-center gap-sm text-sm text-muted"><span style="color:var(--accent-green)">✓</span> Prix Marché IA</div>
+          <div class="flex items-center gap-sm text-sm text-muted"><span style="color:var(--accent-green)">✓</span> Vendeurs Certifiés</div>
+          <div class="flex items-center gap-sm text-sm text-muted"><span style="color:var(--accent-green)">✓</span> 58 Wilayas</div>
+        </div>
+      </div>
+      <!-- Hero phone mockup -->
+      <div style="display:flex;justify-content:center;align-items:center;position:relative" class="hero-phone">
+        <div style="position:relative;width:280px;margin:0 auto">
+          <!-- Glowing background -->
+          <div style="position:absolute;inset:-40px;background:radial-gradient(circle,rgba(59,130,246,0.2),transparent 70%);border-radius:50%;animation:orb-float 4s ease-in-out infinite"></div>
+          <!-- Phone frame -->
+          <div style="background:linear-gradient(145deg,#1a1a2e,#16213e);border-radius:40px;padding:12px;border:2px solid rgba(255,255,255,0.1);box-shadow:0 30px 60px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.1);position:relative;z-index:1">
+            <div style="background:#000;border-radius:32px;overflow:hidden;aspect-ratio:9/19.5">
+              <!-- Status bar -->
+              <div style="padding:12px 16px 8px;display:flex;justify-content:space-between;align-items:center;font-size:0.7rem;font-weight:600">
+                <span>9:41</span>
+                <div style="width:120px;height:28px;background:#000;border-radius:20px;position:absolute;top:0;left:50%;transform:translateX(-50%)"></div>
+                <span>████</span>
+              </div>
+              <!-- App preview -->
+              <div style="padding:16px;background:var(--bg-primary)">
+                <div style="background:var(--gradient-brand);border:1px solid var(--border-color);border-radius:16px;padding:16px;margin-bottom:12px;text-align:center">
+                  <div style="font-size:1.5rem;font-weight:800;color:white">iFindz</div>
+                  <div style="font-size:0.7rem;opacity:0.8;color:white">Premium Marketplace</div>
+                </div>
+                <!-- Mini listing cards -->
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:10px;display:flex;gap:10px;align-items:center">
+                    <div style="font-size:1.5rem">📱</div>
+                    <div style="flex:1">
+                      <div style="font-weight:600;font-size:0.7rem">iPhone 16 Pro</div>
+                      <div style="color:var(--accent-green);font-size:0.65rem;font-weight:700">258 000 DA</div>
+                    </div>
+                    <div style="font-size:0.6rem;background:rgba(16,185,129,0.2);color:var(--accent-green);padding:2px 6px;border-radius:99px">✓ IMEI</div>
+                  </div>
+                  <div style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:10px;display:flex;gap:10px;align-items:center">
+                    <div style="font-size:1.5rem">📱</div>
+                    <div style="flex:1">
+                      <div style="font-weight:600;font-size:0.7rem">iPhone 15 Pro Max</div>
+                      <div style="color:var(--accent-blue-light);font-size:0.65rem;font-weight:700">240 000 DA</div>
+                    </div>
+                    <span style="font-size:0.6rem;background:rgba(245,158,11,0.2);color:var(--accent-gold);padding:2px 6px;border-radius:99px">⭐ Pro</span>
+                  </div>
+                  <div style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:10px;display:flex;gap:10px;align-items:center">
+                    <div style="font-size:1.5rem">📱</div>
+                    <div style="flex:1">
+                      <div style="font-weight:600;font-size:0.7rem">iPhone 14</div>
+                      <div style="color:var(--accent-gold);font-size:0.65rem;font-weight:700">152 000 DA</div>
+                    </div>
+                    <div style="font-size:0.6rem;background:rgba(16,185,129,0.2);color:var(--accent-green);padding:2px 6px;border-radius:99px">💎 Deal</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+      <div class="stat-item">
+        <div class="stat-value gradient-text" id="stat-listings">1 247</div>
+        <div class="stat-label">Annonces Actives</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value text-green" id="stat-verified">892</div>
+        <div class="stat-label">IMEI Vérifiés</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value text-gold" id="stat-sellers">234</div>
+        <div class="stat-label">Vendeurs Certifiés</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value text-accent" id="stat-sales">5 438</div>
+        <div class="stat-label">Ventes Réalisées</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Featured Listings -->
+<section class="section">
+  <div class="container">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px">
+      <div>
+        <div class="section-tag">🔥 En Ce Moment</div>
+        <h2 class="heading-1">Annonces Récentes</h2>
+      </div>
+      <a href="marketplace.html" class="btn btn-secondary">Voir toutes →</a>
+    </div>
+    <div class="listings-grid" id="featured-grid"></div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="section" style="background:linear-gradient(180deg,transparent,rgba(59,130,246,0.03),transparent)">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:48px">
+      <div class="section-tag">⚡ Simple & Rapide</div>
+      <h2 class="heading-1">Vendre en 3 Étapes</h2>
+      <p class="text-muted text-lg mt-md">De l'annonce à la vente, le processus le plus simple d'Algérie.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative">
+      <div class="how-card">
+        <div class="how-icon">📸</div>
+        <h3 class="heading-3 mb-md">1. Publiez</h3>
+        <p class="text-muted">Renseignez le modèle, l'état, la batterie et les photos. Notre IA suggère le prix idéal en temps réel.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">🔍</div>
+        <h3 class="heading-3 mb-md">2. Vérifiez</h3>
+        <p class="text-muted">Entrez l'IMEI pour certification anti-vol. Obtenez le badge "IMEI Vérifié" et inspirez la confiance.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">💸</div>
+        <h3 class="heading-3 mb-md">3. Vendez</h3>
+        <p class="text-muted">Recevez des messages d'acheteurs vérifiés directement. Échangez en sécurité dans votre wilaya.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Market Intelligence -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;flex-wrap:wrap">
+      <div>
+        <div class="section-tag">🧠 Intelligence IA</div>
+        <h2 class="heading-1" style="margin-bottom:16px">Prix du Marché<br>en Temps Réel</h2>
+        <p class="text-muted text-lg" style="margin-bottom:24px;line-height:1.7">
+          Notre moteur analyse des centaines d'annonces pour vous donner le prix juste à chaque instant. Ne payez jamais trop cher, ne vendez jamais trop bas.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="flex items-center gap-md"><span style="color:var(--accent-green);font-size:1.25rem">📊</span><span>Analyse en continu des tendances</span></div>
+          <div class="flex items-center gap-md"><span style="color:var(--accent-blue-light);font-size:1.25rem">🚨</span><span>Détection automatique des prix suspects</span></div>
+          <div class="flex items-center gap-md"><span style="color:var(--accent-gold);font-size:1.25rem">💡</span><span>Suggestion de prix à la publication</span></div>
+        </div>
+        <div class="mt-lg"><a href="marketplace.html" class="btn btn-primary">Explorer le marché</a></div>
+      </div>
+      <!-- Price demo widget -->
+      <div>
+        <div class="market-price-widget" style="padding:24px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+            <div class="heading-3">Prix du Marché iDz</div>
+            <span class="badge badge-verified">🟢 Live</span>
+          </div>
+          <div id="market-demo" style="display:flex;flex-direction:column;gap:16px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust Section -->
+<section class="section" style="background:linear-gradient(180deg,transparent,rgba(245,158,11,0.04),transparent)">
+  <div class="container text-center">
+    <div class="section-tag">🛡️ Confiance Totale</div>
+    <h2 class="heading-1" style="margin-bottom:16px">La Sécurité Avant Tout</h2>
+    <p class="text-muted text-lg" style="max-width:600px;margin:0 auto 48px;line-height:1.7">
+      Chaque annonce est contrôlée. Chaque vendeur est évalué. Chaque IMEI peut être vérifié avant achat.
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+      <div class="card p-lg text-center">
+        <div style="font-size:2.5rem;margin-bottom:12px">🔐</div>
+        <div class="font-semibold mb-sm">Vérification IMEI</div>
+        <div class="text-sm text-muted">Consultation GSMA + bases algériennes</div>
+      </div>
+      <div class="card p-lg text-center">
+        <div style="font-size:2.5rem;margin-bottom:12px">⭐</div>
+        <div class="font-semibold mb-sm">Notes & Avis</div>
+        <div class="text-sm text-muted">Historique de ventes vérifiables</div>
+      </div>
+      <div class="card p-lg text-center">
+        <div style="font-size:2.5rem;margin-bottom:12px">🏅</div>
+        <div class="font-semibold mb-sm">Vendeur Certifié</div>
+        <div class="text-sm text-muted">Badge après vérification d'identité</div>
+      </div>
+      <div class="card p-lg text-center">
+        <div style="font-size:2.5rem;margin-bottom:12px">📍</div>
+        <div class="font-semibold mb-sm">58 Wilayas</div>
+        <div class="text-sm text-muted">Couverture nationale complète</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="section">
+  <div class="container">
+    <div style="background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(139,92,246,0.15));border:1px solid rgba(59,130,246,0.25);border-radius:24px;padding:64px 48px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(59,130,246,0.2),transparent);border-radius:50%"></div>
+      <div style="position:absolute;bottom:-50px;left:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(139,92,246,0.2),transparent);border-radius:50%"></div>
+      <div style="position:relative;z-index:1">
+        <h2 class="display-2 mb-md">Prêt à vendre ton iPhone ?</h2>
+        <p class="text-lg text-muted mb-lg">Publie gratuitement en moins de 3 minutes. Prix IA inclus.</p>
+        <div class="flex gap-md justify-center" style="flex-wrap:wrap">
+          <a href="sell.html" class="btn btn-gold btn-lg">📱 Publier maintenant — Gratuit</a>
+          <a href="imei.html" class="btn btn-secondary btn-lg">🔍 Vérifier un IMEI</a>
+        </div>
+        <p class="text-sm text-muted mt-md">Rejoins +2 300 vendeurs actifs sur iFindz</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer style="background:var(--bg-secondary);border-top:1px solid var(--border-color);padding:48px 0 24px">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;flex-wrap:wrap">
+      <div>
+        <div class="nav-logo mb-md"><img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo"><span class="brand-text">iFindz</span></div>
+        <p class="text-muted text-sm" style="max-width:280px;line-height:1.7">Le marketplace iPhone le plus premium d'Algérie. Conçu pour la communauté, propulsé par l'IA.</p>
+        <div class="flex gap-md mt-md">
+          <a href="#" style="color:var(--text-muted);font-size:1.5rem">📸</a>
+          <a href="#" style="color:var(--text-muted);font-size:1.5rem">💬</a>
+          <a href="#" style="color:var(--text-muted);font-size:1.5rem">🐦</a>
+        </div>
+      </div>
+      <div>
+        <div class="font-semibold mb-md">Marketplace</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="marketplace.html" class="text-sm text-muted">Toutes les annonces</a>
+          <a href="sell.html" class="text-sm text-muted">Vendre mon iPhone</a>
+          <a href="imei.html" class="text-sm text-muted">Vérifier IMEI</a>
+          <a href="profile.html" class="text-sm text-muted">Mon profil</a>
+        </div>
+      </div>
+      <div>
+        <div class="font-semibold mb-md">Modèles</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="marketplace.html?model=iPhone+16+Pro" class="text-sm text-muted">iPhone 16 Pro</a>
+          <a href="marketplace.html?model=iPhone+15+Pro" class="text-sm text-muted">iPhone 15 Pro</a>
+          <a href="marketplace.html?model=iPhone+14" class="text-sm text-muted">iPhone 14</a>
+          <a href="marketplace.html?model=iPhone+13" class="text-sm text-muted">iPhone 13</a>
+        </div>
+      </div>
+      <div>
+        <div class="font-semibold mb-md">Wilayas</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="marketplace.html?wilaya=Alger" class="text-sm text-muted">Alger</a>
+          <a href="marketplace.html?wilaya=Oran" class="text-sm text-muted">Oran</a>
+          <a href="marketplace.html?wilaya=Constantine" class="text-sm text-muted">Constantine</a>
+          <a href="marketplace.html?wilaya=Annaba" class="text-sm text-muted">Annaba</a>
+        </div>
+      </div>
+    </div>
+    <div class="divider mb-md"></div>
+    <div class="flex items-center justify-between" style="flex-wrap:wrap;gap:16px">
+      <div class="text-sm text-muted">© 2026 iFindz. Tous droits réservés.</div>
+      <div class="flex gap-md">
+        <a href="#" class="text-sm text-muted">Confidentialité</a>
+        <a href="#" class="text-sm text-muted">CGU</a>
+        <a href="#" class="text-sm text-muted">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  @media (max-width: 768px) {
+    .hero-phone { display: none; }
+    section.hero .container > div { grid-template-columns: 1fr !important; }
+    footer .container > div:first-child { grid-template-columns: 1fr 1fr !important; }
+    .section { padding: 40px 0; }
+    section:has(:not(.hero)) .container > div[style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
+    section .container > div[style*="grid-template-columns:repeat(4"] { grid-template-columns: 1fr 1fr !important; }
+    section .container > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+    .stats-bar .container > div { grid-template-columns: 1fr 1fr !important; }
+  }
+  @media (max-width: 480px) {
+    section.hero { padding: 24px 0 32px; }
+    section.hero .btn-lg { width: 100%; }
+    footer .container > div:first-child { grid-template-columns: 1fr !important; gap: 20px !important; }
+    footer { padding: 32px 0 16px !important; }
+    .stats-bar .container > div { gap: 8px !important; }
+    .stats-bar .stat-item { padding: 8px 0; }
+  }
+</style>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Render 8 featured listings
+  const grid = document.getElementById('featured-grid');
+  if(grid) {
+    const featured = LISTINGS.slice(0, 8);
+    grid.innerHTML = featured.map(renderListingCard).join('');
+  }
+
+  // Market demo widget
+  const demo = document.getElementById('market-demo');
+  if(demo) {
+    const showcase = [
+      { model:'iPhone 16 Pro Max', storage:'256GB' },
+      { model:'iPhone 15 Pro', storage:'128GB' },
+      { model:'iPhone 14', storage:'128GB' },
+      { model:'iPhone 13', storage:'128GB' },
+    ];
+    demo.innerHTML = showcase.map(s=>{
+      const price = getMarketPrice(s.model, s.storage);
+      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border-color)">
+        <div><div style="font-weight:600;font-size:0.9rem">${s.model}</div><div style="font-size:0.75rem;color:var(--text-muted)">${s.storage}</div></div>
+        <div style="text-align:right"><div style="font-family:var(--font-display);font-weight:700;color:var(--accent-blue-light)">${formatPrice(price)}</div><div style="font-size:0.72rem;color:var(--accent-green)">● Marché live</div></div>
+      </div>`;
+    }).join('');
+  }
+
+  // Animate stat counters
+  function animateCounter(el, target, suffix='') {
+    let start = 0;
+    const duration = 2000;
+    const step = target / (duration / 16);
+    const timer = setInterval(()=>{
+      start = Math.min(start + step, target);
+      el.textContent = Math.floor(start).toLocaleString('fr-DZ') + suffix;
+      if(start >= target) clearInterval(timer);
+    }, 16);
+  }
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        animateCounter(document.getElementById('stat-listings'), 1247);
+        animateCounter(document.getElementById('stat-verified'), 892);
+        animateCounter(document.getElementById('stat-sellers'), 234);
+        animateCounter(document.getElementById('stat-sales'), 5438);
+        obs.disconnect();
+      }
+    });
+  });
+  const statsEl = document.querySelector('.stats-bar');
+  if(statsEl) obs.observe(statsEl);
+});
+</script>
+</body>
+</html>

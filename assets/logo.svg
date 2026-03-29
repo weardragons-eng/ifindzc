@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+  <!-- Top Handle -->
+  <rect x="25" y="15" width="50" height="10" rx="5" />
+  <circle cx="25" cy="15" r="6" />
+  <circle cx="75" cy="15" r="6" />
+  <!-- Main Body with Hole -->
+  <path d="M20,35 h60 c4.4,0,8,3.6,8,8 v45 c0,4.4-3.6,8-8,8 h-60 c-4.4,0-8-3.6-8-8 v-45 c0-4.4,3.6-8,8-8 z M38,55 v22 h24 v-22 h-24 z" fill-rule="evenodd" />
+</svg>

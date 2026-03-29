@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketplace iPhones — iFindz</title>
+  <meta name="description" content="Parcourez des centaines d'annonces iPhone vérifiées en Algérie. Filtrez par modèle, état, batterie, wilaya et prix.">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo"><span class="brand-text">iFindz</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="marketplace.html" class="nav-link active">Marketplace</a>
+      <a href="imei.html" class="nav-link">Vérifier IMEI</a>
+      <a href="profile.html" class="nav-link">Mon Profil</a>
+      <a href="chat.html" class="nav-link">Messages</a>
+    </div>
+    <div class="nav-actions">
+      <a href="sell.html" class="btn btn-gold btn-sm">📱 Vendre</a>
+      <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="marketplace.html" class="nav-link">🛍️ Marketplace</a>
+  <a href="imei.html" class="nav-link">🔍 Vérifier IMEI</a>
+  <a href="sell.html" class="nav-link">📱 Vendre mon iPhone</a>
+  <a href="profile.html" class="nav-link">👤 Mon Profil</a>
+  <a href="chat.html" class="nav-link">💬 Messages</a>
+</div>
+
+<div class="page-wrapper">
+  <!-- Page header -->
+  <div style="background:linear-gradient(135deg,var(--bg-secondary),var(--bg-card));border-bottom:1px solid var(--border-color);padding:32px 0">
+    <div class="container">
+      <h1 class="heading-1 mb-sm">📱 Marketplace iPhones</h1>
+      <p class="text-muted">Annonces vérifiées · Prix du marché · Vendeurs certifiés</p>
+      <!-- Search bar -->
+      <div class="mt-lg" style="max-width:600px">
+        <div class="search-bar-wrapper">
+          <span class="search-bar-icon">🔍</span>
+          <input type="text" class="search-bar" id="search-input" placeholder="Rechercher un modèle, couleur, wilaya…" autocomplete="off">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:32px;padding-bottom:64px">
+    <div style="display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:start" id="mp-layout">
+
+      <!-- Filter Panel -->
+      <div class="filter-panel" id="filter-panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+          <div class="heading-3">Filtres</div>
+          <button class="btn btn-sm btn-ghost" onclick="clearAllFilters()">Réinitialiser</button>
+        </div>
+
+        <!-- Condition -->
+        <div class="filter-group">
+          <div class="filter-group-title">État</div>
+          <div class="filter-chip-grid">
+            <div class="filter-chip chip-condition" data-val="New">🟢 Neuf</div>
+            <div class="filter-chip chip-condition" data-val="Like New">🔵 Comme Neuf</div>
+            <div class="filter-chip chip-condition" data-val="Used">🟡 Utilisé</div>
+          </div>
+        </div>
+
+        <!-- Storage -->
+        <div class="filter-group">
+          <div class="filter-group-title">Stockage</div>
+          <div class="filter-chip-grid">
+            <div class="filter-chip chip-storage" data-val="64GB">64 Go</div>
+            <div class="filter-chip chip-storage" data-val="128GB">128 Go</div>
+            <div class="filter-chip chip-storage" data-val="256GB">256 Go</div>
+            <div class="filter-chip chip-storage" data-val="512GB">512 Go</div>
+            <div class="filter-chip chip-storage" data-val="1TB">1 To</div>
+          </div>
+        </div>
+
+        <!-- Battery -->
+        <div class="filter-group">
+          <div class="filter-group-title">Santé Batterie min. <span id="battery-label" style="color:var(--accent-blue-light)">≥ 0%</span></div>
+          <input type="range" class="range-slider" id="battery-slider" min="0" max="100" step="5" value="0">
+          <div style="display:flex;justify-content:space-between" class="text-xs text-muted mt-sm"><span>0%</span><span>50%</span><span>100%</span></div>
+        </div>
+
+        <!-- Price -->
+        <div class="filter-group">
+          <div class="filter-group-title">Prix max. <span id="price-max-label" style="color:var(--accent-blue-light)">Tous</span></div>
+          <input type="range" class="range-slider" id="price-max" min="30000" max="400000" step="5000" value="400000">
+          <div style="display:flex;justify-content:space-between" class="text-xs text-muted mt-sm"><span>30 000</span><span>400 000 DA</span></div>
+        </div>
+
+        <!-- Wilaya -->
+        <div class="filter-group">
+          <div class="filter-group-title">Wilaya</div>
+          <div style="position:relative">
+            <select class="form-select" id="wilaya-select"></select>
+            <div style="position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--text-muted)">▼</div>
+          </div>
+        </div>
+
+        <!-- Availability -->
+        <div class="filter-group">
+          <div class="filter-group-title">Disponibilité</div>
+          <div class="filter-chip-grid">
+            <div class="filter-chip chip-availability" data-val="Immediate">⚡ Immédiat</div>
+            <div class="filter-chip chip-availability" data-val="Delivery">🚚 Livraison</div>
+          </div>
+        </div>
+
+        <!-- Models (top ones) -->
+        <div class="filter-group">
+          <div class="filter-group-title">Modèle populaire</div>
+          <div class="filter-chip-grid">
+            <div class="filter-chip chip-model" data-val="iPhone 16 Pro">16 Pro</div>
+            <div class="filter-chip chip-model" data-val="iPhone 16 Pro Max">16 Pro Max</div>
+            <div class="filter-chip chip-model" data-val="iPhone 15 Pro">15 Pro</div>
+            <div class="filter-chip chip-model" data-val="iPhone 15 Pro Max">15 Pro Max</div>
+            <div class="filter-chip chip-model" data-val="iPhone 14 Pro">14 Pro</div>
+            <div class="filter-chip chip-model" data-val="iPhone 14">14</div>
+            <div class="filter-chip chip-model" data-val="iPhone 13 Pro">13 Pro</div>
+            <div class="filter-chip chip-model" data-val="iPhone 13">13</div>
+            <div class="filter-chip chip-model" data-val="iPhone 12">12</div>
+            <div class="filter-chip chip-model" data-val="iPhone 11">11</div>
+          </div>
+        </div>
+
+        <!-- IMEI verified only -->
+        <div class="filter-group">
+          <label style="display:flex;align-items:center;gap:12px;cursor:pointer">
+            <input type="checkbox" id="imei-only" style="width:18px;height:18px;accent-color:var(--accent-blue)">
+            <div><div class="font-medium">IMEI vérifié uniquement</div><div class="text-xs text-muted">Annonces certifiées propres</div></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Listings -->
+      <div>
+        <!-- Toolbar -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div id="listing-count" class="font-semibold" style="color:var(--accent-blue-light)">— annonces</div>
+            <button class="btn btn-sm btn-ghost" id="filter-toggle" style="display:none">⚙️ Filtres</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <label class="text-sm text-muted">Trier :</label>
+            <select class="form-select" id="sort-select" style="width:auto">
+              <option value="newest">Plus récents</option>
+              <option value="price-asc">Prix croissant</option>
+              <option value="price-desc">Prix décroissant</option>
+              <option value="battery">Meilleure batterie</option>
+              <option value="trust">Vendeur le mieux noté</option>
+            </select>
+          </div>
+        </div>
+        <!-- Active filter chips -->
+        <div id="active-filters" class="active-filters mb-md"></div>
+        <!-- Grid -->
+        <div class="listings-grid" id="listings-grid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+@media (max-width: 900px) {
+  #mp-layout { grid-template-columns: 1fr !important; }
+  #filter-panel { display: none; position: fixed; inset: 0; z-index: 500; overflow-y: auto; border-radius: 0; top: var(--nav-height); max-height: none; }
+  #filter-panel.show { display: block; }
+  #filter-toggle { display: flex !important; }
+}
+@media (max-width: 768px) {
+  #filter-panel { padding: 16px; }
+  #filter-panel .filter-group { margin-bottom: 16px; }
+}
+@media (max-width: 480px) {
+  #mp-layout .form-select { font-size: 0.8125rem; }
+}
+</style>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/marketplace.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const imeiOnly = document.getElementById('imei-only');
+  if(imeiOnly){
+    imeiOnly.addEventListener('change',e=>{
+      // custom filter hook
+      const orig = applyFilters.toString();
+      window._imeiOnly = e.target.checked;
+      refreshListings();
+    });
+  }
+  // Override applyFilters to support imei-only
+  const origApply = applyFilters;
+  window.applyFilters = function(){
+    let r = origApply();
+    if(window._imeiOnly) r = r.filter(l=>l.imeiVerified);
+    return r;
+  };
+});
+</script>
+</body>
+</html>

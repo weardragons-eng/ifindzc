@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion — iFindz</title>
+  <meta name="description" content="Connectez-vous à votre compte iFindz pour acheter et vendre des iPhones en Algérie en toute sécurité.">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo"><span class="brand-text">iFindz</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="imei.html" class="nav-link">Vérifier IMEI</a>
+    </div>
+    <div class="nav-actions">
+      <a href="signup.html" class="btn btn-primary btn-sm">✨ Inscription</a>
+      <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="marketplace.html" class="nav-link">🛍️ Marketplace</a>
+  <a href="imei.html" class="nav-link">🔍 Vérifier IMEI</a>
+  <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px">
+    <a href="signup.html" class="btn btn-primary btn-lg w-full">✨ Créer un compte</a>
+  </div>
+</div>
+
+<!-- Auth Page -->
+<div class="auth-page">
+  <div class="auth-bg-orbs">
+    <div class="auth-orb auth-orb-1"></div>
+    <div class="auth-orb auth-orb-2"></div>
+    <div class="auth-orb auth-orb-3"></div>
+  </div>
+  <div class="auth-grid-lines"></div>
+
+  <div class="auth-container animate-slide-up">
+    <!-- Left: Trust info -->
+    <div class="auth-info">
+      <div class="auth-info-inner">
+        <div class="section-tag" style="margin-bottom:24px">🔒 Espace sécurisé</div>
+        <h1 class="display-2" style="margin-bottom:16px">
+          Bienvenue sur<br><span class="gradient-text">iFindz</span>
+        </h1>
+        <p class="text-lg text-muted" style="line-height:1.7;margin-bottom:32px">
+          Le marketplace iPhone le plus premium d'Algérie. Connectez-vous pour accéder à toutes les fonctionnalités.
+        </p>
+        <div class="auth-trust-features">
+          <div class="auth-trust-item">
+            <div class="auth-trust-icon">🛡️</div>
+            <div>
+              <div class="font-semibold">Marketplace sécurisé</div>
+              <div class="text-sm text-muted">Identité vérifiée pour tous les vendeurs</div>
+            </div>
+          </div>
+          <div class="auth-trust-item">
+            <div class="auth-trust-icon">🔐</div>
+            <div>
+              <div class="font-semibold">Vérification IMEI</div>
+              <div class="text-sm text-muted">Protection anti-vol intégrée</div>
+            </div>
+          </div>
+          <div class="auth-trust-item">
+            <div class="auth-trust-icon">🧠</div>
+            <div>
+              <div class="font-semibold">Prix IA en temps réel</div>
+              <div class="text-sm text-muted">Ne payez jamais trop cher</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Login form -->
+    <div class="auth-form-panel">
+      <div class="auth-form-wrapper">
+        <div class="auth-form-header">
+          <h2 class="heading-1">Connexion</h2>
+          <p class="text-muted mt-sm">Connectez-vous à votre compte iDz</p>
+        </div>
+
+        <form id="login-form" class="auth-form" autocomplete="on">
+          <div class="form-group">
+            <label class="form-label" for="login-email">Adresse email</label>
+            <div class="auth-input-wrapper">
+              <span class="auth-input-icon">📧</span>
+              <input type="email" class="form-input auth-input" id="login-email" placeholder="votre@email.com" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="login-password">
+              <span>Mot de passe</span>
+            </label>
+            <div class="auth-input-wrapper">
+              <span class="auth-input-icon">🔑</span>
+              <input type="password" class="form-input auth-input" id="login-password" placeholder="Votre mot de passe" required autocomplete="current-password">
+              <button type="button" class="auth-password-toggle" id="toggle-password" tabindex="-1">👁️</button>
+            </div>
+          </div>
+
+          <div id="login-error" class="auth-error hidden"></div>
+
+          <button type="submit" class="btn btn-primary btn-lg w-full auth-submit-btn" id="login-submit">
+            <span class="auth-btn-text">Se connecter</span>
+            <span class="auth-btn-loader hidden" id="login-loader">
+              <span class="auth-spinner"></span>
+            </span>
+          </button>
+        </form>
+
+        <div class="auth-divider">
+          <span>ou</span>
+        </div>
+
+        <div class="auth-alt-action">
+          <p class="text-muted">Pas encore de compte ?</p>
+          <a href="signup.html" class="btn btn-secondary w-full">✨ Créer un compte gratuitement</a>
+        </div>
+
+        <div class="auth-demo-hint">
+          <div class="text-xs text-muted" style="text-align:center;margin-top:24px;padding:12px;background:var(--bg-glass-light);border-radius:var(--radius-md);border:1px solid var(--border-color)">
+            <div style="margin-bottom:4px">🧪 <strong>Comptes démo :</strong></div>
+            <div>yacine@ifindz.dz / yacine123 <span class="badge badge-id-verified" style="font-size:0.6rem">✅ Vérifié</span></div>
+            <div>amira@ifindz.dz / amira123 <span class="badge badge-id-verified" style="font-size:0.6rem">✅ Vérifié</span></div>
+            <div>karim@ifindz.dz / karim123 <span class="badge badge-pending" style="font-size:0.6rem">⏳ En attente</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // If already logged in, redirect
+  if (isLoggedIn()) {
+    const params = new URLSearchParams(location.search);
+    const redirect = params.get('redirect');
+    window.location.href = redirect ? decodeURIComponent(redirect) : 'index.html';
+    return;
+  }
+
+  const form = document.getElementById('login-form');
+  const emailInput = document.getElementById('login-email');
+  const passwordInput = document.getElementById('login-password');
+  const errorEl = document.getElementById('login-error');
+  const loader = document.getElementById('login-loader');
+  const submitBtn = document.getElementById('login-submit');
+  const togglePw = document.getElementById('toggle-password');
+
+  // Toggle password visibility
+  togglePw?.addEventListener('click', () => {
+    const type = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = type;
+    togglePw.textContent = type === 'password' ? '👁️' : '🙈';
+  });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    errorEl.classList.add('hidden');
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+      errorEl.textContent = 'Veuillez remplir tous les champs.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+
+    // Show loading
+    submitBtn.disabled = true;
+    loader.classList.remove('hidden');
+    submitBtn.querySelector('.auth-btn-text').textContent = 'Connexion en cours…';
+
+    // Simulate network delay
+    setTimeout(() => {
+      const result = loginUser(email, password);
+      if (result.success) {
+        showToast('Connexion réussie ! Bienvenue ' + result.user.fullName, 'success');
+        setTimeout(() => {
+          const params = new URLSearchParams(location.search);
+          const redirect = params.get('redirect');
+          window.location.href = redirect ? decodeURIComponent(redirect) : 'index.html';
+        }, 800);
+      } else {
+        errorEl.textContent = result.error;
+        errorEl.classList.remove('hidden');
+        submitBtn.disabled = false;
+        loader.classList.add('hidden');
+        submitBtn.querySelector('.auth-btn-text').textContent = 'Se connecter';
+        // Shake animation
+        form.classList.add('auth-shake');
+        setTimeout(() => form.classList.remove('auth-shake'), 500);
+      }
+    }, 1200);
+  });
+});
+</script>
+</body>
+</html>

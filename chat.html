@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+  <title>Messages — iFindz</title>
+  <meta name="description" content="Messagerie sécurisée iFindz. Discutez avec des acheteurs et vendeurs vérifiés en Algérie.">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="toast-container" id="toast-container"></div>
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><img src="assets/logo.svg" class="nav-brand-logo" alt="iFindz Logo"><span class="brand-text">iFindz</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="imei.html" class="nav-link">Vérifier IMEI</a>
+      <a href="profile.html" class="nav-link">Mon Profil</a>
+      <a href="chat.html" class="nav-link active">Messages</a>
+    </div>
+    <div class="nav-actions">
+      <a href="sell.html" class="btn btn-gold btn-sm">📱 Vendre</a>
+      <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="marketplace.html" class="nav-link">🛍️ Marketplace</a>
+  <a href="sell.html" class="nav-link">📱 Vendre</a>
+  <a href="imei.html" class="nav-link">🔍 IMEI</a>
+</div>
+
+<!-- Chat wrapper: fixed height, no document scroll -->
+<div class="chat-page-wrapper">
+  <div class="chat-layout">
+    <!-- Sidebar -->
+    <div class="chat-sidebar">
+      <div class="chat-sidebar-header">
+        <div class="heading-3">Messages</div>
+        <div class="search-bar-wrapper mt-sm"><span class="search-bar-icon" style="font-size:0.9rem">🔍</span><input type="text" class="search-bar" placeholder="Rechercher…" style="padding:10px 10px 10px 40px"></div>
+      </div>
+      <div class="chat-conv-list" id="conv-list"></div>
+    </div>
+
+    <!-- Chat main -->
+    <div class="chat-main">
+      <!-- Chat header -->
+      <div class="chat-header">
+        <div class="chat-avatar" style="width:40px;height:40px;font-size:0.875rem" id="chat-avatar-header">YB</div>
+        <div class="chat-header-info">
+          <div class="font-semibold" id="chat-header-name">Yacine Bouzid</div>
+          <div class="text-xs text-muted" id="chat-header-listing">iPhone 16 Pro 512GB</div>
+        </div>
+        <div class="chat-header-actions">
+          <button class="btn btn-sm btn-ghost btn-icon" onclick="showToast('Appel en cours…','info')" title="Appeler">📞</button>
+          <a href="listing.html?id=4" class="btn btn-sm btn-secondary chat-header-link">Voir l'annonce</a>
+        </div>
+      </div>
+
+      <!-- Offer banner (demo) -->
+      <div id="offer-banner" class="chat-offer-banner">
+        <div class="flex items-center gap-md" style="min-width:0">
+          <span style="font-size:1.25rem;flex-shrink:0">💰</span>
+          <div style="min-width:0">
+            <div class="font-medium text-sm">Offre reçue : <strong>290 000 DA</strong></div>
+            <div class="text-xs text-muted">Prix demandé: 298 000 DA</div>
+          </div>
+        </div>
+        <div class="flex gap-sm" style="flex-shrink:0">
+          <button class="btn btn-sm btn-gold" onclick="this.closest('#offer-banner').innerHTML='<span style=\'color:var(--accent-green)\'>✅ Offre acceptée !</span>';showToast('Offre acceptée ! Coordonnez l\'échange.','success')">✓ Accepter</button>
+          <button class="btn btn-sm btn-ghost" onclick="this.closest('#offer-banner').style.display='none';showToast('Offre refusée','info')">✕</button>
+        </div>
+      </div>
+
+      <!-- Messages — scrollable container -->
+      <div class="chat-messages" id="messages-container"></div>
+
+      <!-- Quick replies — horizontal scroll -->
+      <div class="chat-quick-replies">
+        <div id="quick-replies" class="chat-quick-replies-inner"></div>
+      </div>
+
+      <!-- Input bar — pinned at bottom -->
+      <div class="chat-input-bar">
+        <button class="btn btn-icon btn-ghost" onclick="showToast('Envoi de photo à venir !','info')" title="Photo">📎</button>
+        <textarea id="chat-input" class="form-input chat-textarea" placeholder="Votre message…" rows="1"></textarea>
+        <button id="chat-send" class="btn btn-primary btn-icon" style="padding:11px 16px">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ─── Chat page scoped styles ─────────────────────────────────── */
+body { overflow: hidden; } /* prevent body scroll on chat page */
+
+.chat-page-wrapper {
+  position: fixed; top: var(--nav-height); left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+}
+
+.chat-sidebar-header {
+  padding: 16px; border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+.chat-conv-list {
+  overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch;
+}
+.chat-sidebar {
+  display: flex; flex-direction: column;
+}
+
+.chat-header {
+  padding: 12px 16px; border-bottom: 1px solid var(--border-color);
+  background: var(--bg-card); display: flex; align-items: center; gap: 12px;
+  flex-shrink: 0; min-height: 0;
+}
+.chat-header-info { flex: 1; min-width: 0; }
+.chat-header-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+.chat-offer-banner {
+  background: linear-gradient(135deg,rgba(245,158,11,0.1),rgba(239,68,68,0.1));
+  border-bottom: 1px solid rgba(245,158,11,0.3);
+  padding: 10px 16px; display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  flex-shrink: 0;
+}
+
+.chat-quick-replies {
+  padding: 6px 12px; border-top: 1px solid var(--border-color);
+  overflow-x: auto; white-space: nowrap; background: var(--bg-secondary);
+  flex-shrink: 0; -webkit-overflow-scrolling: touch;
+}
+.chat-quick-replies-inner { display: flex; gap: 8px; }
+
+.chat-textarea {
+  flex: 1; min-height: 40px; max-height: 100px; resize: none;
+  padding: 10px 14px; border-radius: var(--radius-lg);
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .chat-header { padding: 10px 12px; gap: 8px; }
+  .chat-header-link { display: none; }
+  .chat-offer-banner { padding: 8px 12px; }
+  .chat-textarea { font-size: 16px; } /* prevents iOS zoom */
+}
+
+@media (max-width: 480px) {
+  .chat-header .chat-avatar { width: 32px !important; height: 32px !important; font-size: 0.75rem !important; }
+  .chat-header-info .font-semibold { font-size: 0.875rem; }
+}
+</style>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/chat.js"></script>
+</body>
+</html>
+
